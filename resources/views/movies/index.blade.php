@@ -162,7 +162,6 @@
             }
         });
 
-        // Remover alertas após 3 segundos
         setTimeout(function() {
             $('.alert').fadeOut('slow');
         }, 3000);

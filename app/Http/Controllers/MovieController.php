@@ -15,7 +15,7 @@ class MovieController extends Controller
 
     public function index()
     {
-        $movies = Movie::all();
+        $movies = Movie::orderBy('id', 'asc')->get();
         return view('movies.index', compact('movies'));
     }
 
@@ -28,7 +28,7 @@ class MovieController extends Controller
             'disponivel' => 'nullable|boolean',
         ]);
         
-        $validated['disponivel'] = $request->has('disponivel') ? 1 : 0;
+        $validated['disponivel'] = $request->input('disponivel', 0);
 
         try {
             Movie::create($validated);
@@ -75,8 +75,7 @@ class MovieController extends Controller
         ], $messages);
     
         try {
-            // Aqui está a correção para o checkbox
-            $validated['disponivel'] = $request->has('disponivel') && $request->disponivel == '1';
+            $validated['disponivel'] = $request->disponivel ? 1 : 0;
             
             $movie->update($validated);
             
