@@ -48,7 +48,13 @@
                                 <td>{{ $movie->disponivel ? 'Sim' : 'Não' }}</td>
                                 <td>
                                     <button class="btn btn-sm btn-primary">Editar</button>
-                                    <button class="btn btn-sm btn-danger">Excluir</button>
+                                    <form action="{{ route('movies.destroy', $movie->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este filme?')">
+                                            Excluir
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

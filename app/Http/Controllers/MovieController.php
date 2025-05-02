@@ -42,4 +42,17 @@ class MovieController extends Controller
                 ->with('error', 'Erro ao cadastrar filme. Por favor, tente novamente.');
         }
     }
+
+    public function destroy(Movie $movie)
+    {
+        try {
+            $movie->delete();
+            return redirect()->route('movies.index')
+                ->with('success', 'Filme excluído com sucesso!');
+        } catch (\Exception $e) {
+            Log::error('Erro ao excluir filme: ' . $e->getMessage());
+            return redirect()->route('movies.index')
+                ->with('error', 'Erro ao excluir filme. Por favor, tente novamente.');
+        }
+    }
 }
