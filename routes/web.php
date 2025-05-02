@@ -17,4 +17,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/movies', [App\Http\Controllers\MovieController::class, 'index'])->name('movies.index');
 Route::post('/movies', [App\Http\Controllers\MovieController::class, 'store'])->name('movies.store');
+Route::put('/movies/{movie}', [App\Http\Controllers\MovieController::class, 'update'])->name('movies.update');
 Route::delete('/movies/{movie}', [App\Http\Controllers\MovieController::class, 'destroy'])->name('movies.destroy');

@@ -47,7 +47,7 @@
                                 <td>{{ $movie->codigo }}</td>
                                 <td>{{ $movie->disponivel ? 'Sim' : 'Não' }}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-primary">Editar</button>
+                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editMovieModal{{ $movie->id }}">Editar</button>
                                     <form action="{{ route('movies.destroy', $movie->id) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
@@ -103,6 +103,47 @@
         </div>
     </div>
 </div>
+
+<!-- Modais de Edição -->
+@foreach($movies as $movie)
+<div class="modal fade" id="editMovieModal{{ $movie->id }}" tabindex="-1" aria-labelledby="editMovieModalLabel{{ $movie->id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editMovieModalLabel{{ $movie->id }}">Editar Filme</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{{ route('movies.update', $movie->id) }}" id="editMovieForm{{ $movie->id }}">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="nome{{ $movie->id }}" class="form-label">Nome do Filme</label>
+                        <input type="text" class="form-control" id="nome{{ $movie->id }}" name="nome" value="{{ $movie->nome }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ano{{ $movie->id }}" class="form-label">Ano</label>
+                        <input type="number" class="form-control" id="ano{{ $movie->id }}" name="ano" min="1900" max="{{ date('Y') + 1 }}" value="{{ $movie->ano }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="codigo{{ $movie->id }}" class="form-label">Código</label>
+                        <input type="number" class="form-control" id="codigo{{ $movie->id }}" name="codigo" value="{{ $movie->codigo }}" required>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="hidden" name="disponivel" value="0">
+                        <input type="checkbox" class="form-check-input" id="disponivel{{ $movie->id }}" name="disponivel" value="1" {{ $movie->disponivel ? 'checked' : '' }}>
+                        <label class="form-check-label" for="disponivel{{ $movie->id }}">Disponível</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endforeach
 
 @push('styles')
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
