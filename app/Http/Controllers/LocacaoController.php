@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movie;
+use App\Models\Cliente;
 
 class LocacaoController extends Controller
 {
@@ -14,6 +15,7 @@ class LocacaoController extends Controller
     public function index()
     {
         $movies = Movie::orderBy('id', 'asc')->get();
-        return view('locacoes.index', compact('movies'));
+        $clientes = Cliente::orderBy('nome', 'asc')->get();
+        return view('locacoes.index', compact('movies', 'clientes'));
     }
 }

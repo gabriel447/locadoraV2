@@ -45,7 +45,7 @@
                                 <td>{{ $movie->codigo }}</td>
                                 <td>{{ $movie->genero }}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-success" onclick="return alert('Funcionalidade em desenvolvimento')">
+                                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#locarMovieModal{{ $movie->id }}">
                                         Locar
                                     </button>
                                 </td>
@@ -60,6 +60,44 @@
     </div>
 </div>
 
+<!-- Modal de Locação -->
+@foreach($movies as $movie)
+@if($movie->disponivel)
+<div class="modal fade" id="locarMovieModal{{ $movie->id }}" tabindex="-1" aria-labelledby="locarMovieModalLabel{{ $movie->id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="locarMovieModalLabel{{ $movie->id }}">Locar Filme: {{ $movie->nome }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{{ route('locacoes.store') }}">
+                @csrf
+                <input type="hidden" name="movie_id" value="{{ $movie->id }}">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="cliente_id" class="form-label">Cliente</label>
+                        <select class="form-select" id="cliente_id" name="cliente_id" required>
+                            <option value="">Selecione um cliente</option>
+                            @foreach($clientes as $cliente)
+                                <option value="{{ $cliente->id }}">{{ $cliente->nome }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="data_devolucao" class="form-label">Data de Devolução</label>
+                        <input type="date" class="form-control" id="data_devolucao" name="data_devolucao" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Confirmar Locação</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endif
+@endforeach
 @push('styles')
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
