@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('nome');
             $table->integer('ano');
             $table->integer('codigo')->unique();
+            $table->string('genero');
             $table->boolean('disponivel')->default(true);
             $table->timestamps();
         });

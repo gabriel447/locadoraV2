@@ -10,6 +10,7 @@ class Movie extends Model
         'nome',
         'ano',
         'codigo',
+        'genero',
         'disponivel'
     ];
 }

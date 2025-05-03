@@ -34,6 +34,7 @@
                                 <th>Nome</th>
                                 <th>Ano</th>
                                 <th>Código</th>
+                                <th>Gênero</th>
                                 <th>Disponível</th>
                                 <th>Ações</th>
                             </tr>
@@ -45,6 +46,7 @@
                                 <td>{{ $movie->nome }}</td>
                                 <td>{{ $movie->ano }}</td>
                                 <td>{{ $movie->codigo }}</td>
+                                <td>{{ $movie->genero }}</td>
                                 <td>{{ $movie->disponivel ? 'Sim' : 'Não' }}</td>
                                 <td>
                                     <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editMovieModal{{ $movie->id }}">Editar</button>
@@ -89,6 +91,15 @@
                         <label for="codigo" class="form-label">Código</label>
                         <input type="number" class="form-control" id="codigo" name="codigo" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="genero" class="form-label">Gênero</label>
+                        <select class="form-select" id="genero" name="genero" required>
+                            <option value="" selected disabled>Selecione um gênero</option>
+                            @foreach($generos as $genero)
+                                <option value="{{ $genero }}">{{ $genero }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="mb-3 form-check">
                         <input type="hidden" name="disponivel" value="0">
                         <input type="checkbox" class="form-check-input" id="disponivel" name="disponivel" value="1" checked>
@@ -128,6 +139,14 @@
                     <div class="mb-3">
                         <label for="codigo{{ $movie->id }}" class="form-label">Código</label>
                         <input type="number" class="form-control" id="codigo{{ $movie->id }}" name="codigo" value="{{ $movie->codigo }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="genero{{ $movie->id }}" class="form-label">Gênero</label>
+                        <select class="form-select" id="genero{{ $movie->id }}" name="genero" required>
+                            @foreach($generos as $genero)
+                                <option value="{{ $genero }}" {{ $movie->genero == $genero ? 'selected' : '' }}>{{ $genero }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="mb-3 form-check">
                         <input type="hidden" name="disponivel" value="0">

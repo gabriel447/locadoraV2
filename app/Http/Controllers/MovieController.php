@@ -16,7 +16,8 @@ class MovieController extends Controller
     public function index()
     {
         $movies = Movie::orderBy('id', 'asc')->get();
-        return view('movies.index', compact('movies'));
+        $generos = ['Ação', 'Aventura', 'Comédia', 'Drama', 'Ficção Científica', 'Romance', 'Terror', 'Suspense', 'Documentário', 'Animação'];
+        return view('movies.index', compact('movies', 'generos'));
     }
 
     public function store(Request $request)
@@ -25,17 +26,18 @@ class MovieController extends Controller
             'nome' => 'required|string|max:255',
             'ano' => 'required|integer|min:1900|max:' . (date('Y')),
             'codigo' => 'required|integer|unique:movies,codigo',
+            'genero' => 'required|string',
             'disponivel' => 'nullable|boolean',
         ]);
         
         $validated['disponivel'] = $request->input('disponivel', 0);
-
+    
         try {
             Movie::create($validated);
-
+    
             return redirect()->route('movies.index')
                 ->with('success', 'Filme cadastrado com sucesso!');
-
+    
         } catch (\Exception $e) {
             Log::error('Erro ao cadastrar filme: ' . $e->getMessage());
             return redirect()->route('movies.index')
@@ -64,13 +66,15 @@ class MovieController extends Controller
             'ano.integer' => 'O ano deve ser um número inteiro',
             'codigo.required' => 'O código do filme é obrigatório',
             'codigo.integer' => 'O código deve ser um número inteiro',
-            'codigo.unique' => 'Este código já está em uso'
+            'codigo.unique' => 'Este código já está em uso',
+            'genero.required' => 'O gênero do filme é obrigatório'
         ];
     
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
             'ano' => 'required|integer|min:1900|max:' . (date('Y') + 1),
             'codigo' => 'required|integer|unique:movies,codigo,' . $movie->id,
+            'genero' => 'required|string',
             'disponivel' => 'boolean'
         ], $messages);
     
