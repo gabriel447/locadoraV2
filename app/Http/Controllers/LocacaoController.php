@@ -60,4 +60,46 @@ class LocacaoController extends Controller
             return redirect()->back()->with('error', 'Erro ao realizar a locação: ' . $e->getMessage());
         }
     }
+
+    public function devolucoes()
+    {
+        $locacoes = Locacao::where('devolvido', false)
+                          ->orderBy('data_devolucao', 'asc')
+                          ->get();
+        return view('devolucoes.index', compact('locacoes'));
+    }
+
+    public function devolver($id)
+    {
+        try {
+            $locacao = Locacao::findOrFail($id);
+            $movie = Movie::where('codigo', $locacao->codigo_filme)->first();
+
+            if (!$movie) {
+                return redirect()->back()->with('error', 'Filme não encontrado.');
+            }
+
+            // Verificar se há multa
+            $dataAtual = Carbon::now();
+            $dataDevolucao = Carbon::parse($locacao->data_devolucao);
+            
+            if ($dataAtual->gt($dataDevolucao)) {
+                $locacao->multa = true;
+                $diasAtraso = $dataAtual->diffInDays($dataDevolucao);
+                $locacao->valor_multa = $diasAtraso * 2.00; // R$ 2,00 por dia de atraso
+            }
+
+            $locacao->devolvido = true;
+            $locacao->data_devolucao_efetiva = $dataAtual;
+            $locacao->save();
+
+            // Atualizar disponibilidade do filme
+            $movie->disponivel = true;
+            $movie->save();
+
+            return redirect()->back()->with('success', 'Filme devolvido com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao devolver o filme: ' . $e->getMessage());
+        }
+    }
 }

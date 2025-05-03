@@ -38,6 +38,13 @@
                                 </div>
                             </a>
                         </div>
+                        <div class="col-md-4 mb-3">
+                            <a href="{{ route('devolucoes.index') }}" class="text-decoration-none">
+                                <div class="menu-button">
+                                    <p class="fs-4 mb-0">Devoluções</p>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

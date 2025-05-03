@@ -17,3 +17,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('movies', MovieController::class);
 Route::resource('clientes', ClienteController::class);
 Route::resource('locacoes', LocacaoController::class);
+Route::get('/devolucoes', [LocacaoController::class, 'devolucoes'])->name('devolucoes.index');
+Route::put('/devolucoes/{id}', [LocacaoController::class, 'devolver'])->name('devolucoes.devolver');
