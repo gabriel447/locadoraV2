@@ -85,7 +85,10 @@
                     </div>
                     <div class="mb-3">
                         <label for="data_devolucao" class="form-label">Data de Devolução</label>
-                        <input type="date" class="form-control" id="data_devolucao" name="data_devolucao" required>
+                        <input type="date" class="form-control" id="data_devolucao" name="data_devolucao" 
+                               min="{{ date('Y-m-d') }}" 
+                               value="{{ date('Y-m-d', strtotime('+7 days')) }}" 
+                               required>
                     </div>
                 </div>
                 <div class="modal-footer">
