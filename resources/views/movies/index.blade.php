@@ -49,11 +49,13 @@
                                 <td>{{ $movie->genero }}</td>
                                 <td>{{ $movie->disponivel ? 'Sim' : 'Não' }}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editMovieModal{{ $movie->id }}">Editar</button>
-                                    <form action="{{ route('movies.destroy', $movie->id) }}" method="POST" style="display: inline;">
+                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editMovieModal{{ $movie->id }}">
+                                        Editar
+                                    </button>
+                                    <form action="{{ route('movies.destroy', $movie->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este filme?')">
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este filme?')">
                                             Excluir
                                         </button>
                                     </form>

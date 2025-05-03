@@ -49,12 +49,16 @@
                                 <td>{{ $cliente->cidade }}</td>
                                 <td>{{ $cliente->bairro }}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#viewClienteModal{{ $cliente->id }}">Ver</button>
-                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editClienteModal{{ $cliente->id }}">Editar</button>
-                                    <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST" style="display: inline;">
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#viewClienteModal{{ $cliente->id }}">
+                                        Detalhes
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editClienteModal{{ $cliente->id }}">
+                                        Editar
+                                    </button>
+                                    <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este cliente?')">
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este cliente?')">
                                             Excluir
                                         </button>
                                     </form>
