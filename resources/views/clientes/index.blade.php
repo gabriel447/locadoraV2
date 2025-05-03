@@ -5,17 +5,17 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
             @endif
 
             @if(session('error'))
-                <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
             @endif
 
             <div class="card">
@@ -40,18 +40,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($clientes as $cliente)
+                            @forelse($clientes as $cliente)
                             <tr>
                                 <td>{{ $cliente->id }}</td>
                                 <td>{{ $cliente->nome }}</td>
-                                <td>{{ $cliente->idade }}</td>
                                 <td>{{ $cliente->cpf }}</td>
+                                <td>{{ $cliente->idade }}</td>
                                 <td>{{ $cliente->cidade }}</td>
                                 <td>{{ $cliente->bairro }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#viewClienteModal{{ $cliente->id }}">
-                                        Detalhes
-                                    </button>
                                     <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editClienteModal{{ $cliente->id }}">
                                         Editar
                                     </button>
@@ -64,7 +61,16 @@
                                     </form>
                                 </td>
                             </tr>
-                            @endforeach
+                            @empty
+                            <tr>
+                                <td colspan="7" class="text-center py-4">
+                                    <div class="text-muted">
+                                        <i class="fas fa-users me-2"></i>
+                                        Nenhum cliente cadastrado no sistema
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -158,7 +164,7 @@
                         <p><strong>Bairro:</strong> {{ $cliente->bairro }}</p>
                         <p><strong>Cidade:</strong> {{ $cliente->cidade }}</p>
                         @if($cliente->complemento)
-                            <p><strong>Complemento:</strong> {{ $cliente->complemento }}</p>
+                        <p><strong>Complemento:</strong> {{ $cliente->complemento }}</p>
                         @endif
                     </div>
                 </div>

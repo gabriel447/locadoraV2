@@ -5,17 +5,17 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
             @endif
 
             @if(session('error'))
-                <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
             @endif
 
             <div class="card">
@@ -40,7 +40,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($movies as $movie)
+                            @forelse($movies as $movie)
                             <tr>
                                 <td>{{ $movie->id }}</td>
                                 <td>{{ $movie->nome }}</td>
@@ -61,7 +61,16 @@
                                     </form>
                                 </td>
                             </tr>
-                            @endforeach
+                            @empty
+                            <tr>
+                                <td colspan="7" class="text-center py-4">
+                                    <div class="text-muted">
+                                        <i class="fas fa-film me-2"></i>
+                                        Nenhum filme cadastrado no sistema
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -98,7 +107,7 @@
                         <select class="form-select" id="genero" name="genero" required>
                             <option value="" selected disabled>Selecione um gênero</option>
                             @foreach($generos as $genero)
-                                <option value="{{ $genero }}">{{ $genero }}</option>
+                            <option value="{{ $genero }}">{{ $genero }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -146,7 +155,7 @@
                         <label for="genero{{ $movie->id }}" class="form-label">Gênero</label>
                         <select class="form-select" id="genero{{ $movie->id }}" name="genero" required>
                             @foreach($generos as $genero)
-                                <option value="{{ $genero }}" {{ $movie->genero == $genero ? 'selected' : '' }}>{{ $genero }}</option>
+                            <option value="{{ $genero }}" {{ $movie->genero == $genero ? 'selected' : '' }}>{{ $genero }}</option>
                             @endforeach
                         </select>
                     </div>

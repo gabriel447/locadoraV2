@@ -32,7 +32,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($locacoes as $locacao)
+                            @forelse($locacoes as $locacao)
                             <tr>
                                 <td>{{ $locacao->id }}</td>
                                 <td>{{ $locacao->nome_cliente }}</td>
@@ -56,7 +56,16 @@
                                     </form>
                                 </td>
                             </tr>
-                            @endforeach
+                            @empty
+                            <tr>
+                                <td colspan="9" class="text-center py-4">
+                                    <div class="text-muted">
+                                        <i class="fas fa-film me-2"></i>
+                                        Nenhuma locação pendente para devolução
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

@@ -5,17 +5,17 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
             @endif
 
             @if(session('error'))
-                <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
             @endif
 
             <div class="card">
@@ -36,7 +36,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($movies as $movie)
+                            @forelse($movies as $movie)
                             @if($movie->disponivel)
                             <tr>
                                 <td>{{ $movie->id }}</td>
@@ -51,7 +51,16 @@
                                 </td>
                             </tr>
                             @endif
-                            @endforeach
+                            @empty
+                            <tr>
+                                <td colspan="6" class="text-center py-4">
+                                    <div class="text-muted">
+                                        <i class="fas fa-ticket-alt me-2"></i>
+                                        Não há filmes disponíveis para locação no momento
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -79,7 +88,7 @@
                         <select class="form-select" id="cliente_id" name="cliente_id" required>
                             <option value="">Selecione um cliente</option>
                             @foreach($clientes as $cliente)
-                                <option value="{{ $cliente->id }}">{{ $cliente->nome }}</option>
+                            <option value="{{ $cliente->id }}">{{ $cliente->nome }}</option>
                             @endforeach
                         </select>
                     </div>
