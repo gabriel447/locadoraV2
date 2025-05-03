@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card main-card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
@@ -14,24 +14,22 @@
                         </div>
                     @endif
 
-                    <div class="row">
+                    <h3 class="text-center mb-5 welcome-text">Bem-vindo {{ Auth::user()->name }}!</h3>
+
+                    <div class="row text-center">
                         <div class="col-md-6 mb-3">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">Gerenciar Filmes</h5>
-                                    <p class="card-text">Adicione, edite ou remova filmes do catálogo.</p>
-                                    <a href="{{ route('movies.index') }}" class="btn btn-primary">Acessar</a>
+                            <a href="{{ route('movies.index') }}" class="text-decoration-none">
+                                <div class="menu-button">
+                                    <p class="fs-4 mb-0">Filmes</p>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">Gerenciar Clientes</h5>
-                                    <p class="card-text">Adicione, edite ou remova clientes do sistema.</p>
-                                    <a href="{{ route('clientes.index') }}" class="btn btn-primary">Acessar</a>
+                            <a href="{{ route('clientes.index') }}" class="text-decoration-none">
+                                <div class="menu-button">
+                                    <p class="fs-4 mb-0">Clientes</p>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>

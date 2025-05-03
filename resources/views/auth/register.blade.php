@@ -78,7 +78,7 @@
     }
     
     .form-wrapper {
-        margin-top: 50px;  /* Ajusta a distância do topo */
+        margin-top: 50px;
     }
 
     .card {
