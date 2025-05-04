@@ -61,7 +61,11 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('devolucoes.devolver', $locacao->id) }}" class="btn btn-primary btn-sm">Devolver</a>
+                                            <form action="{{ route('devolucoes.devolver', $locacao->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="btn btn-primary btn-sm">Devolver</button>
+                                            </form>
                                         </td>
                                     </tr>
                         @if($loop->last)
