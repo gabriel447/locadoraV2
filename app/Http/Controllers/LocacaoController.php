@@ -74,8 +74,10 @@ class LocacaoController extends Controller
 
     public function devolucoes()
     {
-        // Alterado para mostrar apenas locações não devolvidas
-        $locacoes = Locacao::where('devolvido', false)->get();
+        // Alterado para mostrar apenas locações não devolvidas, ordenadas por ID
+        $locacoes = Locacao::where('devolvido', false)
+                          ->orderBy('id', 'asc')
+                          ->get();
         
         // Calcular valores e status para cada locação
         foreach ($locacoes as $locacao) {
