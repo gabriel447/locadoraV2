@@ -40,10 +40,15 @@ class LocacaoController extends Controller
                 return redirect()->back()->with('error', 'Este filme não está disponível para locação.');
             }
 
-            // Calcular o valor da locação (R$ 5,00 por dia)
             $dataLocacao = Carbon::now();
             $dataDevolucao = Carbon::parse($request->data_devolucao);
-            $diasLocados = $dataLocacao->diffInDays($dataDevolucao) + 1; // +1 porque conta o próprio dia
+
+            // Verifica se a data de devolução é hoje
+            if ($dataDevolucao->isToday()) {
+                return redirect()->back()->with('error', 'A data de devolução não pode ser hoje.');
+            }
+
+            $diasLocados = $dataLocacao->diffInDays($dataDevolucao) + 1;
             $valorLocacao = $diasLocados * 5;
 
             // Criar a locação

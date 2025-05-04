@@ -133,7 +133,18 @@
         function validarDataDevolucao(input) {
             const data = new Date(input.value);
             const diaSemana = data.getDay();
+            const hoje = new Date();
+            hoje.setHours(0, 0, 0, 0);
+            data.setHours(0, 0, 0, 0);
             
+            // Verifica se é a data de hoje
+            if (data.getTime() === hoje.getTime()) {
+                alert('A data de devolução não pode ser hoje.');
+                input.value = '';
+                return;
+            }
+            
+            // Verifica se é sábado ou domingo
             if (diaSemana === 0 || diaSemana === 6) {
                 alert('Não é possível agendar devoluções para sábados ou domingos.');
                 input.value = '';
