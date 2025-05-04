@@ -32,40 +32,37 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($locacoes as $locacao)
+                            @foreach($locacoes as $locacao)
                             <tr>
                                 <td>{{ $locacao->id }}</td>
                                 <td>{{ $locacao->nome_cliente }}</td>
                                 <td>{{ $locacao->nome_filme }}</td>
                                 <td>{{ $locacao->codigo_filme }}</td>
-                                <td>{{ \Carbon\Carbon::parse($locacao->data_locacao)->format('d/m/Y') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($locacao->data_devolucao)->format('d/m/Y') }}</td>
-                                <td>R$ {{ number_format($locacao->valor, 2, ',', '.') }}</td>
+                                <td>{{ $locacao->data_locacao->format('d/m/Y') }}</td>
+                                <td>{{ $locacao->data_devolucao->format('d/m/Y') }}</td>
                                 <td>
-                                    @if(\Carbon\Carbon::now()->gt(\Carbon\Carbon::parse($locacao->data_devolucao)))
-                                        <span class="badge bg-danger">Atrasado</span>
+                                    @if($locacao->atrasado)
+                                        <span class="text-danger">
+                                            R$ {{ number_format($locacao->valor_total, 2, ',', '.') }}
+                                        </span>
+                                    @else
+                                        <span class="text-success">
+                                            R$ {{ number_format($locacao->valor, 2, ',', '.') }}
+                                        </span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($locacao->atrasado)
+                                        <span class="badge bg-danger">Atrasado ({{ $locacao->dias_atraso }} dias)</span>
                                     @else
                                         <span class="badge bg-success">No Prazo</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <form action="{{ route('devolucoes.devolver', $locacao->id) }}" method="POST" style="display: inline;">
-                                        @csrf
-                                        @method('PUT')
-                                        <button type="submit" class="btn btn-primary btn-sm">Devolver</button>
-                                    </form>
+                                    <a href="{{ route('devolucoes.devolver', $locacao->id) }}" class="btn btn-primary btn-sm">Devolver</a>
                                 </td>
                             </tr>
-                            @empty
-                            <tr>
-                                <td colspan="9" class="text-center py-4">
-                                    <div class="text-muted">
-                                        <i class="fas fa-film me-2"></i>
-                                        Nenhuma locação pendente para devolução
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforelse
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

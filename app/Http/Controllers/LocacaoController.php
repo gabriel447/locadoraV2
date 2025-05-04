@@ -76,6 +76,52 @@ class LocacaoController extends Controller
     {
         // Alterado para mostrar apenas locações não devolvidas
         $locacoes = Locacao::where('devolvido', false)->get();
+        
+        // Calcular valores e status para cada locação
+        foreach ($locacoes as $locacao) {
+            $hoje = Carbon::now();
+            $dataDevolucao = Carbon::parse($locacao->data_devolucao);
+            
+            // Verificar se está atrasado
+            $locacao->atrasado = $hoje->gt($dataDevolucao);
+            
+            // Calcular dias de locação originais
+            $diasOriginais = Carbon::parse($locacao->data_locacao)->diffInDays($dataDevolucao) + 1;
+            $valorOriginal = $diasOriginais * 5;
+            
+            // Se estiver atrasado, calcular multa
+            if ($locacao->atrasado) {
+                // Calcular dias totais de atraso (incluindo fins de semana)
+                $diasAtrasoTotal = $hoje->diffInDays($dataDevolucao);
+                
+                // Calcular dias úteis de atraso (excluindo fins de semana)
+                $diasAtrasoUteis = 0;
+                $dataAtual = $dataDevolucao->copy()->addDay();
+                
+                while ($dataAtual->lte($hoje)) {
+                    if (!$dataAtual->isWeekend()) {
+                        $diasAtrasoUteis++;
+                    }
+                    $dataAtual->addDay();
+                }
+                
+                $valorMulta = $diasAtrasoUteis * 2.50;
+                $diasTotais = Carbon::parse($locacao->data_locacao)->diffInDays($hoje) + 1;
+                $valorTotal = $diasTotais * 5 + $valorMulta;
+                
+                // Atualizar com o número correto de dias de atraso
+                $locacao->dias_atraso = $diasAtrasoTotal;
+                $locacao->dias_atraso_uteis = $diasAtrasoUteis;
+                $locacao->valor_multa = $valorMulta;
+                $locacao->valor_total = $valorTotal;
+            } else {
+                $locacao->dias_atraso = 0;
+                $locacao->dias_atraso_uteis = 0;
+                $locacao->valor_multa = 0;
+                $locacao->valor_total = $valorOriginal;
+            }
+        }
+        
         return view('devolucoes.index', compact('locacoes'));
     }
 
@@ -84,14 +130,16 @@ class LocacaoController extends Controller
         try {
             $locacao = Locacao::findOrFail($id);
             $movie = Movie::where('codigo', $locacao->codigo_filme)->first();
-
+    
             if (!$movie) {
                 return redirect()->back()->with('error', 'Filme não encontrado.');
             }
-
+    
             // Calcular multa se houver atraso
             $dataDevolucaoEfetiva = Carbon::now();
             $dataDevolucaoPrevista = Carbon::parse($locacao->data_devolucao);
+            
+            $valorTotal = $locacao->valor; // Valor original
             
             if ($dataDevolucaoEfetiva->gt($dataDevolucaoPrevista)) {
                 $diasAtrasoUteis = 0;
@@ -107,23 +155,30 @@ class LocacaoController extends Controller
                 if ($diasAtrasoUteis > 0) {
                     $locacao->multa = true;
                     // Multa é R$ 2,50 por dia útil de atraso
-                    $locacao->valor_multa = $diasAtrasoUteis * 2.50;
+                    $valorMulta = $diasAtrasoUteis * 2.50;
+                    $locacao->valor_multa = $valorMulta;
+                    
+                    // Recalcular o valor total da locação incluindo os dias de atraso
+                    $diasTotais = Carbon::parse($locacao->data_locacao)->diffInDays($dataDevolucaoEfetiva) + 1;
+                    $valorDiarias = $diasTotais * 5; // R$ 5,00 por dia
+                    
+                    $valorTotal = $valorDiarias + $valorMulta;
                 }
             }
-
+    
             // Atualizar status do filme e da locação
             $movie->disponivel = true;
             $movie->save();
-
+    
             $locacao->devolvido = true;
             $locacao->data_devolucao_efetiva = $dataDevolucaoEfetiva;
             $locacao->save();
-
+    
             $mensagem = 'Filme devolvido com sucesso!';
             if ($locacao->multa) {
-                $mensagem .= ' Multa por atraso: R$ ' . number_format($locacao->valor_multa, 2, ',', '.');
+                $mensagem .= ' <strong>Valor total:</strong> R$ ' . number_format($valorTotal, 2, ',', '.');
             }
-
+    
             return redirect()->route('devolucoes.index')->with('success', $mensagem);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erro ao devolver o filme: ' . $e->getMessage());
