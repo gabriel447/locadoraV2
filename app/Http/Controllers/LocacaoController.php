@@ -63,7 +63,59 @@ class LocacaoController extends Controller
 
     public function devolucoes()
     {
-        $locacoes = Locacao::where('multa', false)->get();
+        // Alterado para mostrar apenas locações não devolvidas
+        $locacoes = Locacao::where('devolvido', false)->get();
         return view('devolucoes.index', compact('locacoes'));
+    }
+
+    public function devolver($id)
+    {
+        try {
+            $locacao = Locacao::findOrFail($id);
+            $movie = Movie::where('codigo', $locacao->codigo_filme)->first();
+
+            if (!$movie) {
+                return redirect()->back()->with('error', 'Filme não encontrado.');
+            }
+
+            // Calcular multa se houver atraso
+            $dataDevolucaoEfetiva = Carbon::now();
+            $dataDevolucaoPrevista = Carbon::parse($locacao->data_devolucao);
+            
+            if ($dataDevolucaoEfetiva->gt($dataDevolucaoPrevista)) {
+                $diasAtrasoUteis = 0;
+                $dataAtual = $dataDevolucaoPrevista->copy()->addDay();
+                
+                while ($dataAtual->lte($dataDevolucaoEfetiva)) {
+                    if (!$dataAtual->isWeekend()) {
+                        $diasAtrasoUteis++;
+                    }
+                    $dataAtual->addDay();
+                }
+                
+                if ($diasAtrasoUteis > 0) {
+                    $locacao->multa = true;
+                    // Multa é R$ 2,50 por dia útil de atraso
+                    $locacao->valor_multa = $diasAtrasoUteis * 2.50;
+                }
+            }
+
+            // Atualizar status do filme e da locação
+            $movie->disponivel = true;
+            $movie->save();
+
+            $locacao->devolvido = true;
+            $locacao->data_devolucao_efetiva = $dataDevolucaoEfetiva;
+            $locacao->save();
+
+            $mensagem = 'Filme devolvido com sucesso!';
+            if ($locacao->multa) {
+                $mensagem .= ' Multa por atraso: R$ ' . number_format($locacao->valor_multa, 2, ',', '.');
+            }
+
+            return redirect()->route('devolucoes.index')->with('success', $mensagem);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao devolver o filme: ' . $e->getMessage());
+        }
     }
 }
