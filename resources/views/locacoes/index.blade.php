@@ -94,7 +94,13 @@
                     </div>
                     <div class="mb-3">
                         <label for="data_devolucao" class="form-label">Data de Devolução</label>
-                        <input type="date" class="form-control" id="data_devolucao" name="data_devolucao" required>
+                        <input type="date" 
+                               class="form-control" 
+                               id="data_devolucao" 
+                               name="data_devolucao" 
+                               required
+                               min="{{ date('Y-m-d') }}"
+                               onchange="validarDataDevolucao(this)">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -123,6 +129,16 @@
                 url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json'
             }
         });
+
+        function validarDataDevolucao(input) {
+            const data = new Date(input.value);
+            const diaSemana = data.getDay();
+            
+            if (diaSemana === 0 || diaSemana === 6) {
+                alert('Não é possível agendar devoluções para sábados ou domingos.');
+                input.value = '';
+            }
+        }
     });
 </script>
 @endpush

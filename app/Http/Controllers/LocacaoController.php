@@ -25,6 +25,18 @@ class LocacaoController extends Controller
     public function store(Request $request)
     {
         try {
+            $dataDevolucao = Carbon::parse($request->data_devolucao);
+            
+            // Validar se é fim de semana
+            if ($dataDevolucao->isWeekend()) {
+                return redirect()->back()->with('error', 'Não é permitido agendar devoluções para sábados ou domingos.');
+            }
+
+            // Validar se é data passada
+            if ($dataDevolucao->isPast()) {
+                return redirect()->back()->with('error', 'Não é permitido agendar devoluções para datas passadas.');
+            }
+
             $movie = Movie::where('id', $request->movie_id)->first();
             $cliente = Cliente::find($request->cliente_id);
             
@@ -42,12 +54,12 @@ class LocacaoController extends Controller
 
             // Criar a locação
             $locacao = new Locacao();
-            $locacao->nome_cliente = $cliente->nome; // Usando o nome do cliente selecionado
+            $locacao->nome_cliente = $cliente->nome;
             $locacao->nome_filme = $movie->nome;
             $locacao->codigo_filme = $movie->codigo;
             $locacao->data_locacao = Carbon::now();
-            $locacao->data_devolucao = $request->data_devolucao;
-            $locacao->valor = 10.00; // Você pode ajustar este valor conforme necessário
+            $locacao->data_devolucao = $dataDevolucao;
+            $locacao->valor = 10.00;
             $locacao->multa = false;
             $locacao->save();
 
