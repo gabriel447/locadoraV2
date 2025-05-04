@@ -17,54 +17,81 @@
                 </div>
 
                 <div class="card-body">
-                    <table id="devolucoesTable" class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Cliente</th>
-                                <th>Filme</th>
-                                <th>Código do Filme</th>
-                                <th>Data de Locação</th>
-                                <th>Data de Devolução</th>
-                                <th>Valor</th>
-                                <th>Status</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($locacoes as $locacao)
-                            <tr>
-                                <td>{{ $locacao->id }}</td>
-                                <td>{{ $locacao->nome_cliente }}</td>
-                                <td>{{ $locacao->nome_filme }}</td>
-                                <td>{{ $locacao->codigo_filme }}</td>
-                                <td>{{ $locacao->data_locacao->format('d/m/Y') }}</td>
-                                <td>{{ $locacao->data_devolucao->format('d/m/Y') }}</td>
-                                <td>
-                                    @if($locacao->atrasado)
-                                        <span class="text-danger">
-                                            R$ {{ number_format($locacao->valor_total, 2, ',', '.') }}
-                                        </span>
-                                    @else
-                                        <span class="text-success">
-                                            R$ {{ number_format($locacao->valor, 2, ',', '.') }}
-                                        </span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($locacao->atrasado)
-                                        <span class="badge bg-danger">Atrasado ({{ $locacao->dias_atraso }} dias)</span>
-                                    @else
-                                        <span class="badge bg-success">No Prazo</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <a href="{{ route('devolucoes.devolver', $locacao->id) }}" class="btn btn-primary btn-sm">Devolver</a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    @forelse($locacoes as $locacao)
+                        @if($loop->first)
+                            <table id="devolucoesTable" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Cliente</th>
+                                        <th>Filme</th>
+                                        <th>Código do Filme</th>
+                                        <th>Data de Locação</th>
+                                        <th>Data de Devolução</th>
+                                        <th>Valor</th>
+                                        <th>Status</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        @endif
+                                    <tr>
+                                        <td>{{ $locacao->id }}</td>
+                                        <td>{{ $locacao->nome_cliente }}</td>
+                                        <td>{{ $locacao->nome_filme }}</td>
+                                        <td>{{ $locacao->codigo_filme }}</td>
+                                        <td>{{ $locacao->data_locacao->format('d/m/Y') }}</td>
+                                        <td>{{ $locacao->data_devolucao->format('d/m/Y') }}</td>
+                                        <td>
+                                            @if($locacao->atrasado)
+                                                <span class="text-danger">
+                                                    R$ {{ number_format($locacao->valor_total, 2, ',', '.') }}
+                                                </span>
+                                            @else
+                                                <span class="text-success">
+                                                    R$ {{ number_format($locacao->valor, 2, ',', '.') }}
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($locacao->atrasado)
+                                                <span class="badge bg-danger">Atrasado ({{ $locacao->dias_atraso }} dias)</span>
+                                            @else
+                                                <span class="badge bg-success">No Prazo</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('devolucoes.devolver', $locacao->id) }}" class="btn btn-primary btn-sm">Devolver</a>
+                                        </td>
+                                    </tr>
+                        @if($loop->last)
+                                </tbody>
+                            </table>
+                        @endif
+                    @empty
+                        <table id="devolucoesTable" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Cliente</th>
+                                    <th>Filme</th>
+                                    <th>Código do Filme</th>
+                                    <th>Data de Locação</th>
+                                    <th>Data de Devolução</th>
+                                    <th>Valor</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="align-middle">
+                                    <td colspan="9" class="text-center py-4 text-muted">
+                                        Não há filmes para devolução no momento.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    @endforelse
                 </div>
             </div>
         </div>
@@ -82,11 +109,13 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
 <script>
     $(document).ready(function() {
-        $('#devolucoesTable').DataTable({
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json'
-            }
-        });
+        if (document.getElementById('devolucoesTable')) {
+            $('#devolucoesTable').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json'
+                }
+            });
+        }
     });
 </script>
 @endpush
