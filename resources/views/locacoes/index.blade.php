@@ -36,31 +36,39 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php $temFilmeDisponivel = false; @endphp
+                            
                             @forelse($movies as $movie)
-                            @if($movie->disponivel)
-                            <tr>
-                                <td>{{ $movie->id }}</td>
-                                <td>{{ $movie->nome }}</td>
-                                <td>{{ $movie->ano }}</td>
-                                <td>{{ $movie->codigo }}</td>
-                                <td>{{ $movie->genero }}</td>
-                                <td>
-                                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#locarMovieModal{{ $movie->id }}">
-                                        Locar
-                                    </button>
-                                </td>
-                            </tr>
-                            @endif
+                                @if($movie->disponivel)
+                                    @php $temFilmeDisponivel = true; @endphp
+                                    <tr>
+                                        <td>{{ $movie->id }}</td>
+                                        <td>{{ $movie->nome }}</td>
+                                        <td>{{ $movie->ano }}</td>
+                                        <td>{{ $movie->codigo }}</td>
+                                        <td>{{ $movie->genero }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#locarMovieModal{{ $movie->id }}">
+                                                Locar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endif
                             @empty
-                            <tr>
-                                <td colspan="6" class="text-center py-4">
-                                    <div class="text-muted">
-                                        <i class="fas fa-ticket-alt me-2"></i>
-                                        Não há filmes disponíveis para locação no momento
-                                    </div>
-                                </td>
-                            </tr>
+                                <tr class="align-middle">
+                                    <td colspan="6" class="text-center py-4 text-muted">
+                                        Não há filmes disponíveis para locação no momento.
+                                    </td>
+                                </tr>
                             @endforelse
+
+                            @if(!$temFilmeDisponivel && count($movies) > 0)
+                                <tr class="align-middle">
+                                    <td colspan="6" class="text-center py-4 text-muted">
+                                        Não há filmes disponíveis para locação no momento.
+                                    </td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
