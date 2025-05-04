@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
-                    <h2 class="text-center mb-4">Bem-vindo Gabe!</h2>
+                    <h2 class="text-center mb-4">Bem-vindo {{ Auth::user()->name }}!</h2>
                     
                     <div class="row mb-3">
                         <div class="col-md-6">
