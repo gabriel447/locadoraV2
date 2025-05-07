@@ -2,31 +2,29 @@
 
 @section('content')
 <style>
-html, body {
-    height: 100vh;
-    margin: 0;
-}
-#app {
+body {
+    background-color: #fff !important;
     min-height: 100vh;
-    background-color: #f8f9fa;
 }
 .card {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin: 2rem auto;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    max-width: 1200px;
 }
-.btn-primary {
-    padding: 0.75rem;
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+.card-header {
     font-size: 1rem;
-    margin: 0.3rem 0;
-    transition: all 0.3s ease;
 }
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+h2 {
+    font-size: 1.5rem !important;
 }
-.card-body {
-    padding: 1.5rem;
+.btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
 }
 </style>
 

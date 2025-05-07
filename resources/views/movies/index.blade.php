@@ -1,6 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+body {
+    background-color: #fff !important;
+    min-height: 100vh;
+}
+.card {
+    margin: 2rem auto;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    max-width: 1200px;
+}
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+</style>
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
