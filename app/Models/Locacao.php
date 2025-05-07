@@ -15,13 +15,13 @@ class Locacao extends Model
         'data_locacao',
         'data_devolucao',
         'valor',
-        'multa'
+        'status'
     ];
 
     protected $casts = [
         'data_locacao' => 'datetime',
         'data_devolucao' => 'datetime',
-        'multa' => 'boolean'
+        'status' => 'boolean'
     ];
 
     private function getDatasBrasilia()
