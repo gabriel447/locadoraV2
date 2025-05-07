@@ -41,7 +41,7 @@ body {
                                         <th>ID</th>
                                         <th>Cliente</th>
                                         <th>Filme</th>
-                                        <th>Código do Filme</th>
+                                        <th>Código</th>
                                         <th>Data de Locação</th>
                                         <th>Data de Devolução</th>
                                         <th>Valor</th>

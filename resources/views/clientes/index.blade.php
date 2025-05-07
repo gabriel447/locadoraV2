@@ -49,8 +49,8 @@ body {
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
-                                <th>Idade</th>
                                 <th>CPF</th>
+                                <th>Idade</th>
                                 <th>Cidade</th>
                                 <th>Bairro</th>
                                 <th>Ações</th>
