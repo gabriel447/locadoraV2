@@ -1,8 +1,8 @@
 /**
- * Configuração personalizada para DataTables
+ * Configuração personalizada para DataTables - Tema Claro Moderno
  */
 $(document).ready(function() {
-    console.log('Inicializando DataTables personalizados');
+    console.log('Inicializando DataTables personalizados - Tema Claro');
     
     // Inicializa tabelas específicas
     var tables = [
@@ -20,6 +20,9 @@ $(document).ready(function() {
             if ($.fn.DataTable.isDataTable(tableId)) {
                 $(tableId).DataTable().destroy();
             }
+            
+            // Remover classes de tema escuro se existirem
+            $(tableId).removeClass('table-dark');
             
             // Inicializar com novas configurações
             $(tableId).DataTable({
@@ -46,7 +49,9 @@ $(document).ready(function() {
                         first: "Primeiro",
                         last: "Último"
                     }
-                }
+                },
+                stripeClasses: ['odd', 'even'],
+                dom: '<"top"lf>rt<"bottom"ip>',
             });
         }
     });
