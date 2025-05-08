@@ -66,6 +66,9 @@ body {
                                 <td>{{ $cliente->cidade }}</td>
                                 <td>{{ $cliente->bairro }}</td>
                                 <td>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#viewClienteModal{{ $cliente->id }}">
+                                        Detalhes
+                                    </button>
                                     <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editClienteModal{{ $cliente->id }}">
                                         Editar
                                     </button>
