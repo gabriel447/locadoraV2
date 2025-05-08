@@ -1,8 +1,8 @@
 /* Estilo personalizado para DataTables - Tema Claro Moderno */
 .dataTables_wrapper {
-    padding: 10px 0;
+    padding: 15px;
     font-family: 'Nunito', sans-serif;
-    background-color: #f8f9fa;
+    background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
@@ -28,7 +28,7 @@ table.dataTable thead th {
 
 /* Células da tabela */
 table.dataTable tbody td {
-    padding: 10px;
+    padding: 12px 10px;
     border-bottom: 1px solid #f0f0f0;
     vertical-align: middle;
 }
@@ -50,7 +50,7 @@ table.dataTable tbody tr:hover {
 /* Campo de busca */
 .dataTables_wrapper .dataTables_filter {
     margin-bottom: 15px;
-    float: right;
+    text-align: right;
 }
 
 .dataTables_wrapper .dataTables_filter input {
@@ -79,12 +79,12 @@ table.dataTable tbody tr:hover {
 /* Paginação */
 .dataTables_wrapper .dataTables_paginate {
     margin-top: 15px;
-    float: right;
+    text-align: center;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button {
     padding: 6px 12px;
-    margin-left: 5px;
+    margin: 0 2px;
     border-radius: 4px;
     border: 1px solid #dee2e6;
     background: #fff;
@@ -93,9 +93,9 @@ table.dataTable tbody tr:hover {
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.current, 
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-    background: #0d6efd !important;
+    background: #007bff !important;
     color: white !important;
-    border: 1px solid #0d6efd;
+    border: 1px solid #007bff;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
@@ -115,13 +115,8 @@ table.dataTable tbody tr:hover {
 /* Informações da tabela */
 .dataTables_wrapper .dataTables_info {
     margin-top: 15px;
+    text-align: left;
     float: left;
-}
-
-/* Estilo para tabelas responsivas */
-.table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
 }
 
 /* Botões de ação */
@@ -142,4 +137,26 @@ table.dataTable tbody tr:hover {
     background-color: #dc3545;
     border-color: #dc3545;
     color: #fff;
+}
+
+/* Título da tabela */
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    padding: 15px;
+    font-weight: bold;
+}
+
+/* Botão de adicionar */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    float: right;
+}
+
+/* Limpar floats */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
 }

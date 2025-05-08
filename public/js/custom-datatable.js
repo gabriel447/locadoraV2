@@ -1,8 +1,8 @@
 /**
- * Configuração personalizada para DataTables
+ * Configuração personalizada para DataTables - Tema Claro Moderno
  */
 $(document).ready(function() {
-    console.log('Inicializando DataTables personalizados - Tema Claro');
+    console.log('Inicializando DataTables personalizados');
     
     // Inicializa tabelas específicas
     var tables = [
@@ -21,13 +21,10 @@ $(document).ready(function() {
                 $(tableId).DataTable().destroy();
             }
             
-            // Remover classes de tema escuro se existirem
-            $(tableId).removeClass('table-dark');
-            
             // Inicializar com novas configurações
             $(tableId).DataTable({
                 responsive: true,
-                pageLength: 10,
+                pageLength: 5, // Mostrar 5 registros por página
                 lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
                 ordering: true,
                 searching: true,
@@ -50,8 +47,8 @@ $(document).ready(function() {
                         last: "Último"
                     }
                 },
-                stripeClasses: ['odd', 'even'],
-                dom: '<"top"lf>rt<"bottom"ip>',
+                stripeClasses: ['even', 'odd'],
+                dom: '<"clearfix"<"float-start"f><"float-end"l>>rt<"clearfix"<"float-start"i><"float-end"p>>',
             });
         }
     });
