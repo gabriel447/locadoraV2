@@ -1,0 +1,55 @@
+/* Estilo personalizado para DataTables */
+.dataTables_wrapper {
+    padding: 10px 0;
+    font-family: 'Nunito', sans-serif;
+}
+
+.dataTables_wrapper .dataTables_length, 
+.dataTables_wrapper .dataTables_filter {
+    margin-bottom: 15px;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin: 0 5px;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 6px 12px;
+    margin-left: 5px;
+}
+
+table.dataTable {
+    border-collapse: collapse !important;
+    width: 100% !important;
+    margin-bottom: 1rem;
+    border: 1px solid #dee2e6;
+}
+
+table.dataTable thead th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6 !important;
+    font-weight: 600;
+    padding: 12px 10px;
+    color: #495057;
+}
+
+table.dataTable tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #dee2e6;
+    vertical-align: middle;
+}
+
+table.dataTable tbody tr:hover {
+    background-color: rgba(13, 110, 253, 0.05);
+}
+
+/* Estilo para tabelas responsivas */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
