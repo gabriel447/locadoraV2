@@ -1,11 +1,6 @@
-/**
- * Funções de validação e formatação para o sistema de locadora
- */
-
 function formatCPF(cpf) {
     cpf = cpf.replace(/\D/g, '');
     if (cpf.length > 11) cpf = cpf.substring(0, 11);
-    
     if (cpf.length > 9) {
         cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
     } else if (cpf.length > 6) {
@@ -47,13 +42,20 @@ function limitarIdade(idade) {
 function limparFormulario(form) {
     var inputs = form.querySelectorAll('input');
     inputs.forEach(function(input) {
-        input.value = '';
+        if (input.type === 'checkbox') {
+            input.checked = false;
+        } else {
+            input.value = '';
+        }
+    });
+    
+    var selects = form.querySelectorAll('select');
+    selects.forEach(function(select) {
+        select.selectedIndex = 0;
     });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Validações carregadas');
-    
+document.addEventListener('DOMContentLoaded', function() {   
     var cpfInput = document.getElementById('cpf');
     var cepInput = document.getElementById('cep');
     var nomeInput = document.getElementById('nome');
@@ -115,14 +117,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     var modais = document.querySelectorAll('.modal');
     modais.forEach(function(modal) {
-        modal.addEventListener('shown.bs.modal', function() {
-            console.log('Modal aberto, reaplicando validações');
-        });
-        
         var cancelarBtn = modal.querySelector('button[data-bs-dismiss="modal"]');
         if (cancelarBtn) {
             cancelarBtn.addEventListener('click', function() {
-                console.log('Botão cancelar clicado, limpando formulário');
                 var form = modal.querySelector('form');
                 if (form) {
                     limparFormulario(form);
@@ -133,7 +130,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     modais.forEach(function(modal) {
         modal.addEventListener('hidden.bs.modal', function() {
-            console.log('Modal fechado, limpando formulário');
             var form = modal.querySelector('form');
             if (form) {
                 limparFormulario(form);
