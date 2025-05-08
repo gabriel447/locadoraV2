@@ -114,7 +114,8 @@ table.dataTable tbody tr:hover {
     color: #0a58ca !important;
 }
 
-.dataTables_paginate .paginate_button.current {
+.dataTables_paginate .paginate_button.current,
+.dataTables_paginate .paginate_button.current:hover {
     background-color: #0d6efd !important;
     border-color: #0d6efd !important;
     color: #fff !important;
@@ -125,6 +126,16 @@ table.dataTable tbody tr:hover {
     pointer-events: none !important;
     background-color: #fff !important;
     border-color: #dee2e6 !important;
+}
+
+/* Garantir que o botão ativo sempre tenha texto branco */
+.page-item.active .page-link,
+.page-item.active .page-link:hover,
+.page-item.active .page-link:focus,
+.page-item.active .page-link:active {
+    color: #fff !important;
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
 }
 
 .page-link:active {
