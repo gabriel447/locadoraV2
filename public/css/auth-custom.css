@@ -1,0 +1,104 @@
+/* Estilo personalizado para páginas de autenticação */
+body {
+    background-color: #ffffff !important;
+    color: #333333 !important;
+    font-family: 'Nunito', sans-serif;
+}
+
+/* Forçar fundo branco em todos os elementos */
+#app, main, .container, .row, .col, .card {
+    background-color: #ffffff !important;
+}
+
+/* Container principal centralizado */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    width: 100%;
+}
+
+/* Card de autenticação */
+.auth-card {
+    width: 100%;
+    max-width: 450px;
+    background-color: #ffffff !important;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+}
+
+/* Cabeçalho do card */
+.auth-card .card-header {
+    background-color: #f8f9fa !important;
+    color: #333333 !important;
+    border-bottom: 1px solid #dee2e6;
+    padding: 15px 20px;
+    font-weight: bold;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    text-align: center;
+}
+
+/* Corpo do card */
+.auth-card .card-body {
+    padding: 25px;
+}
+
+/* Campos de formulário */
+.auth-card .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 10px 12px;
+    height: auto;
+    background-color: #ffffff !important;
+    color: #333333 !important;
+}
+
+/* Botão primário */
+.auth-card .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    padding: 10px 16px;
+    border-radius: 4px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Links */
+.auth-card .btn-link, .auth-card a {
+    color: #007bff !important;
+}
+
+/* Checkbox */
+.auth-card .form-check {
+    margin-bottom: 15px;
+}
+
+/* Remover fundo escuro do footer */
+footer {
+    background-color: #ffffff !important;
+    color: #6c757d !important;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #ffffff !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Texto da navbar */
+.navbar-brand, .nav-link {
+    color: #333333 !important;
+}
+
+/* Forçar texto escuro em todos os elementos */
+* {
+    color: #333333 !important;
+}
+
+/* Exceção para botões */
+.btn-primary, .btn-primary * {
+    color: #ffffff !important;
+}
