@@ -269,42 +269,19 @@ body {
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+<script src="{{ asset('js/clientes-validations.js') }}"></script>
 <script>
-    // Teste simples para verificar se o JavaScript está funcionando
-    console.log('Teste de JavaScript - Se você está vendo isso no console, o JavaScript está funcionando!');
-    
-    // Verificar se o jQuery está funcionando
-    if (typeof $ === 'function') {
-        console.log('jQuery está funcionando corretamente!');
-        
-        // Teste do DataTables
-        try {
-            $('#clientesTable').DataTable({
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json'
-                }
-            });
-            console.log('DataTables inicializado com sucesso!');
-        } catch (e) {
-            console.error('Erro ao inicializar DataTables:', e);
-        }
-    } else {
-        console.error('jQuery não está funcionando!');
-    }
+    $(document).ready(function() {
+        $('#clientesTable').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json'
+            }
+        });
 
-    // Teste de manipulação do DOM
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('DOM carregado completamente!');
-        
-        // Verificar elementos importantes
-        console.log('Elementos de CPF encontrados:', document.querySelectorAll('input[id^="cpf"]').length);
-        console.log('Elementos de CEP encontrados:', document.querySelectorAll('input[id^="cep"]').length);
+        setTimeout(function() {
+            $('.alert').fadeOut('slow');
+        }, 3000);
     });
-
-    setTimeout(function() {
-        $('.alert').fadeOut('slow');
-        console.log('Temporizador de alerta executado!');
-    }, 3000);
 </script>
 @endpush
 @endsection
