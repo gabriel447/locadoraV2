@@ -1,70 +1,52 @@
 @extends('layouts.app')
 
 @section('content')
-<style>
-body {
-    background-color: #fff !important;
-    min-height: 100vh;
-}
-.card {
-    margin: 2rem auto;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    max-width: 1200px;
-}
-.container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 15px;
-}
-.card-header {
-    font-size: 1rem;
-}
-h2 {
-    font-size: 1.5rem !important;
-}
-.btn {
-    font-size: 0.9rem;
-    padding: 0.5rem 1rem;
-}
-</style>
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>Bem-vindo, {{ Auth::user()->name }}!</h1>
+        <p>Selecione uma das opções abaixo para gerenciar sua locadora</p>
+    </div>
 
-<div class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body mb-2">
-                    <h2 class="text-center mb-4">Bem-vindo {{ Auth::user()->name }}!</h2>
-                    
-                    <div class="row mb-3 justify-content-center">
-                        <div class="col-md-3 px-2">
-                            <a href="{{ route('movies.index') }}" class="btn btn-primary w-100">
-                                Filmes
-                            </a>
-                        </div>
-                        <div class="col-md-3 px-2">
-                            <a href="{{ route('clientes.index') }}" class="btn btn-primary w-100">
-                                Clientes
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div class="row justify-content-center">
-                        <div class="col-md-3 px-2">
-                            <a href="{{ route('locacoes.index') }}" class="btn btn-primary w-100">
-                                Locações
-                            </a>
-                        </div>
-                        <div class="col-md-3 px-2">
-                            <a href="{{ route('devolucoes.index') }}" class="btn btn-primary w-100">
-                                Devoluções
-                            </a>
-                        </div>
-                    </div>
-                </div>
+    <div class="dashboard-cards">
+        <a href="{{ route('movies.index') }}" class="dashboard-card card-filmes">
+            <div class="dashboard-card-body">
+                <i class="fas fa-film dashboard-card-icon"></i>
+                <h3 class="dashboard-card-title">Filmes</h3>
+                <p class="dashboard-card-text">Gerencie o catálogo de filmes disponíveis para locação</p>
             </div>
-        </div>
+        </a>
+
+        <a href="{{ route('clientes.index') }}" class="dashboard-card card-clientes">
+            <div class="dashboard-card-body">
+                <i class="fas fa-users dashboard-card-icon"></i>
+                <h3 class="dashboard-card-title">Clientes</h3>
+                <p class="dashboard-card-text">Cadastre e gerencie os clientes da locadora</p>
+            </div>
+        </a>
+
+        <a href="{{ route('locacoes.index') }}" class="dashboard-card card-locacoes">
+            <div class="dashboard-card-body">
+                <i class="fas fa-handshake dashboard-card-icon"></i>
+                <h3 class="dashboard-card-title">Locações</h3>
+                <p class="dashboard-card-text">Registre e acompanhe as locações de filmes</p>
+            </div>
+        </a>
+
+        <a href="{{ route('devolucoes.index') }}" class="dashboard-card card-devolucoes">
+            <div class="dashboard-card-body">
+                <i class="fas fa-undo-alt dashboard-card-icon"></i>
+                <h3 class="dashboard-card-title">Devoluções</h3>
+                <p class="dashboard-card-text">Registre as devoluções de filmes locados</p>
+            </div>
+        </a>
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+@endpush
+
+@push('styles')
+<link href="{{ asset('css/dashboard-custom.css') }}" rel="stylesheet">
+@endpush
