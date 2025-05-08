@@ -1,5 +1,5 @@
 /**
- * Configuração personalizada para DataTables - Tema Claro Moderno
+ * Configuração personalizada para DataTables
  */
 $(document).ready(function() {
     console.log('Inicializando DataTables personalizados - Tema Claro');

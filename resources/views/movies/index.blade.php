@@ -206,22 +206,6 @@ body {
 <script src="{{ asset('js/custom-datatable.js') }}"></script>
 <script src="{{ asset('js/movies-validations.js') }}"></script>
 <script>
-    // Remover esta inicialização, pois já está no custom-datatable.js
-    /*
-    $(document).ready(function() {
-        $('#moviesTable').DataTable({
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json'
-            }
-        });
-
-        setTimeout(function() {
-            $('.alert').fadeOut('slow');
-        }, 3000);
-    });
-    */
-    
-    // Manter apenas o timeout para os alertas
     $(document).ready(function() {
         setTimeout(function() {
             $('.alert').fadeOut('slow');
