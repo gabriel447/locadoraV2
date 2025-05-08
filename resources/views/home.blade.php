@@ -28,7 +28,7 @@
             <div class="dashboard-card-body">
                 <i class="fas fa-handshake dashboard-card-icon"></i>
                 <h3 class="dashboard-card-title">Locações</h3>
-                <p class="dashboard-card-text">Verifique os filmes disponíveis ou faça uma locação.</p>
+                <p class="dashboard-card-text">Gerencie os filmes disponíveis e registre uma locação.</p>
             </div>
         </a>
 
@@ -36,7 +36,7 @@
             <div class="dashboard-card-body">
                 <i class="fas fa-undo-alt dashboard-card-icon"></i>
                 <h3 class="dashboard-card-title">Devoluções</h3>
-                <p class="dashboard-card-text">Verifique os filmes pendentes ou faça uma devolução.</p>
+                <p class="dashboard-card-text">Gerencie as devoluções pendentes e registre uma devolução.</p>
             </div>
         </a>
     </div>
