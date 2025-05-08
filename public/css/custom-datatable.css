@@ -61,14 +61,7 @@ table.dataTable tbody td {
     background-color: transparent !important;
 }
 
-/* Linhas alternadas - Estilo Striped mais suave */
-table.dataTable tbody tr {
-    background-color: #ffffff !important;
-}
 
-table.dataTable tbody tr.even {
-    background-color: rgba(0, 0, 0, 0.02) !important;
-}
 
 /* Hover nas linhas */
 table.dataTable tbody tr:hover {
@@ -132,6 +125,10 @@ table.dataTable tbody tr:hover {
     pointer-events: none !important;
     background-color: #fff !important;
     border-color: #dee2e6 !important;
+}
+
+.page-link:active {
+    color: white!important;
 }
 
 /* Pesquisa e informações */

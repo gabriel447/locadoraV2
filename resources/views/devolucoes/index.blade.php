@@ -73,7 +73,7 @@ body {
                                             @if($locacao->atrasado)
                                                 <span class="badge bg-danger">Atrasado ({{ $locacao->dias_atraso }} dias)</span>
                                             @else
-                                                <span class="badge bg-success">No Prazo</span>
+                                                <span class="badge bg-success text-white">No Prazo</span>
                                             @endif
                                         </td>
                                         <td>

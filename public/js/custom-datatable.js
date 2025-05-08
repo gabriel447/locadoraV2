@@ -25,7 +25,7 @@ $(document).ready(function() {
             $(tableId).DataTable({
                 processing: true,
                 responsive: true,
-                pageLength: 5, // Mostrar 5 registros por página
+                pageLength: 5,
                 lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
                 ordering: true,
                 searching: true,
@@ -48,7 +48,7 @@ $(document).ready(function() {
                         last: "Último"
                     }
                 },
-                stripeClasses: ['even', 'odd'],
+                // stripeClasses: ['even', 'odd'],
                 dom: '<"clearfix"<"float-start"f><"float-end"l>>rt<"clearfix"<"float-start"i><"float-end"p>>',
             });
         }
