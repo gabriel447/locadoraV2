@@ -4,17 +4,48 @@
     font-family: 'Nunito', sans-serif;
 }
 
+/* Spinner de Carregamento */
+.dataTables_processing {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    margin-left: -100px;
+    text-align: center;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dataTables_processing:after {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
+    border: 3px solid #0d6efd;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 /* Tabela principal */
 table.dataTable {
     width: 100% !important;
     margin-bottom: 1rem;
     border-collapse: collapse !important;
     border: none;
+    background-color: #fff !important;
 }
 
 /* Cabeçalho da tabela */
 table.dataTable thead th {
-    background-color: #f8f9fa;
+    background-color: #f8f9fa !important;
     color: #333;
     font-weight: 600;
     padding: 12px 10px;
@@ -27,16 +58,21 @@ table.dataTable tbody td {
     padding: 10px;
     vertical-align: middle;
     border-bottom: 1px solid #f2f2f2;
+    background-color: transparent !important;
 }
 
-/* Linhas alternadas */
-table.dataTable tbody tr:nth-of-type(odd) {
-    background-color: rgba(0, 0, 0, 0.02);
+/* Linhas alternadas - Estilo Striped mais suave */
+table.dataTable tbody tr {
+    background-color: #ffffff !important;
+}
+
+table.dataTable tbody tr.even {
+    background-color: rgba(0, 0, 0, 0.02) !important;
 }
 
 /* Hover nas linhas */
 table.dataTable tbody tr:hover {
-    background-color: rgba(0, 123, 255, 0.05);
+    background-color: rgba(13, 110, 253, 0.04) !important;
 }
 
 /* Botões de ação */
@@ -59,8 +95,9 @@ table.dataTable tbody tr:hover {
     color: #fff;
 }
 
-/* Botões escuros com texto branco */
-.btn-primary, .btn-dark, .btn-danger, .btn-success {
+/* Garantir texto branco em botões escuros */
+.btn-primary, .btn-dark, .btn-danger, .btn-success, 
+.btn-secondary, .btn-info {
     color: #fff !important;
 }
 

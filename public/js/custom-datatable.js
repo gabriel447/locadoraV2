@@ -23,6 +23,7 @@ $(document).ready(function() {
             
             // Inicializar com novas configurações
             $(tableId).DataTable({
+                processing: true,
                 responsive: true,
                 pageLength: 5, // Mostrar 5 registros por página
                 lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
