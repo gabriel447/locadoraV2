@@ -12,7 +12,7 @@
             <div class="dashboard-card-body">
                 <i class="fas fa-film dashboard-card-icon"></i>
                 <h3 class="dashboard-card-title">Filmes</h3>
-                <p class="dashboard-card-text">Gerencie o catálogo de filmes disponíveis para locação</p>
+                <p class="dashboard-card-text">Cadastre e Gerencie os filmes da locadora.</p>
             </div>
         </a>
 
@@ -20,7 +20,7 @@
             <div class="dashboard-card-body">
                 <i class="fas fa-users dashboard-card-icon"></i>
                 <h3 class="dashboard-card-title">Clientes</h3>
-                <p class="dashboard-card-text">Cadastre e gerencie os clientes da locadora</p>
+                <p class="dashboard-card-text">Cadastre e gerencie os clientes da locadora.</p>
             </div>
         </a>
 
@@ -28,7 +28,7 @@
             <div class="dashboard-card-body">
                 <i class="fas fa-handshake dashboard-card-icon"></i>
                 <h3 class="dashboard-card-title">Locações</h3>
-                <p class="dashboard-card-text">Registre e acompanhe as locações de filmes</p>
+                <p class="dashboard-card-text">Verifique os filmes disponíveis ou faça uma locação.</p>
             </div>
         </a>
 
@@ -36,7 +36,7 @@
             <div class="dashboard-card-body">
                 <i class="fas fa-undo-alt dashboard-card-icon"></i>
                 <h3 class="dashboard-card-title">Devoluções</h3>
-                <p class="dashboard-card-text">Registre as devoluções de filmes locados</p>
+                <p class="dashboard-card-text">Verifique os filmes pendentes ou faça uma devolução.</p>
             </div>
         </a>
     </div>
