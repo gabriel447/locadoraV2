@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class ClienteController extends Controller
 {
@@ -53,7 +52,6 @@ class ClienteController extends Controller
                 ->with('success', 'Cliente cadastrado com sucesso!');
     
         } catch (\Exception $e) {
-            Log::error('Erro ao cadastrar cliente: ' . $e->getMessage());
             return redirect()->route('clientes.index')
                 ->with('error', 'Erro ao cadastrar cliente. Por favor, tente novamente.');
         }
@@ -66,7 +64,6 @@ class ClienteController extends Controller
             return redirect()->route('clientes.index')
                 ->with('success', 'Cliente excluído com sucesso!');
         } catch (\Exception $e) {
-            Log::error('Erro ao excluir cliente: ' . $e->getMessage());
             return redirect()->route('clientes.index')
                 ->with('error', 'Erro ao excluir cliente. Por favor, tente novamente.');
         }
@@ -106,7 +103,6 @@ class ClienteController extends Controller
                 ->with('success', 'Cliente atualizado com sucesso!');
                 
         } catch (\Exception $e) {
-            Log::error('Erro ao atualizar cliente: ' . $e->getMessage());
             return redirect()->route('clientes.index')
                 ->with('error', 'Erro ao atualizar cliente. Por favor, tente novamente.');
         }

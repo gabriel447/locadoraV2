@@ -101,7 +101,7 @@ class LocacaoController extends Controller
                 'valor' => $locacao->valor,
                 'multa' => $request->multa ?? 0,
                 'desconto' => $request->desconto ?? 0,
-                'observacoes' => $request->observacoes ?? 'n/a'
+                'observacoes' => $request->observacoes ?? ''
             ]);
     
             // Marcar locação como devolvida

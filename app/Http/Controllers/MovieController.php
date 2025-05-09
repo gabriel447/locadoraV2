@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Movie;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class MovieController extends Controller
 {
@@ -39,7 +38,6 @@ class MovieController extends Controller
                 ->with('success', 'Filme cadastrado com sucesso!');
     
         } catch (\Exception $e) {
-            Log::error('Erro ao cadastrar filme: ' . $e->getMessage());
             return redirect()->route('movies.index')
                 ->with('error', 'Erro ao cadastrar filme. Por favor, tente novamente.');
         }
@@ -52,7 +50,6 @@ class MovieController extends Controller
             return redirect()->route('movies.index')
                 ->with('success', 'Filme excluído com sucesso!');
         } catch (\Exception $e) {
-            Log::error('Erro ao excluir filme: ' . $e->getMessage());
             return redirect()->route('movies.index')
                 ->with('error', 'Erro ao excluir filme. Por favor, tente novamente.');
         }
@@ -87,7 +84,6 @@ class MovieController extends Controller
                 ->with('success', 'Filme atualizado com sucesso!');
                 
         } catch (\Exception $e) {
-            Log::error('Erro ao atualizar filme: ' . $e->getMessage());
             return redirect()->route('movies.index')
                 ->with('error', 'Erro ao atualizar filme. Por favor, tente novamente.');
         }
