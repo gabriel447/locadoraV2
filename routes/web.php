@@ -7,9 +7,7 @@ use App\Http\Controllers\LocacaoController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+Route::get('/', [HomeController::class, 'index'])->middleware('auth');
 
 Auth::routes();
 
@@ -22,10 +20,10 @@ Route::middleware(['auth'])->group(function () {
     // Rotas de Clientes
     Route::resource('clientes', ClienteController::class);
     
-    // Rotas de Locações
+    // Rotas de Locações e Devoluções
     Route::resource('locacoes', LocacaoController::class);
-    
-    // Rotas de Devoluções
     Route::get('/devolucoes', [LocacaoController::class, 'devolucoes'])->name('devolucoes.index');
-    Route::put('/devolucoes/{id}', [LocacaoController::class, 'devolver'])->name('devolucoes.devolver');
+    Route::post('/devolucoes/confirmar', [LocacaoController::class, 'confirmarDevolucao'])->name('devolucoes.confirmar');
+    Route::get('/devolucoes/historico', [LocacaoController::class, 'historico'])->name('devolucoes.historico');
+    Route::post('/devolucoes/store', [LocacaoController::class, 'confirmarDevolucao'])->name('devolucoes.store');
 });

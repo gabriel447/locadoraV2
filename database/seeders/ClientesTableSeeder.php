@@ -8,9 +8,6 @@ use Faker\Factory as Faker;
 
 class ClientesTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $faker = Faker::create('pt_BR');
@@ -77,32 +74,12 @@ class ClientesTableSeeder extends Seeder
             $sobrenome2 = $faker->boolean(70) ? ' ' . $faker->randomElement($sobrenomes) : '';
             $nome = $primeiroNome . ' ' . $sobrenome1 . $sobrenome2;
             
-            // Gerar CPF formatado
-            $cpf = $faker->numerify('###.###.###-##');
-            
-            // Gerar CEP formatado por região
-            $cep = $faker->randomElement(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']) . $faker->numerify('#####-###');
-            
-            // Endereço mais realista
-            $tipoLogradouro = $faker->randomElement($tiposLogradouro);
-            $nomeRua = $faker->randomElement($nomesRuas);
-            $rua = $tipoLogradouro . ' ' . $nomeRua;
-            
-            // Complementos realistas
-            $complementos = [null, 'Apto ' . $faker->numberBetween(1, 1200), 'Casa ' . $faker->numberBetween(1, 100), 
-                            'Bloco ' . $faker->randomLetter . ' Apto ' . $faker->numberBetween(1, 1200),
-                            'Fundos', 'Sala ' . $faker->numberBetween(1, 500)];
-            
             DB::table('clientes')->insert([
                 'nome' => $nome,
-                'idade' => $faker->numberBetween(18, 80),
-                'cpf' => $cpf,
-                'cep' => $cep,
-                'rua' => $rua,
-                'numero' => $faker->numberBetween(1, 9999),
-                'bairro' => $faker->randomElement($bairros),
-                'cidade' => $faker->randomElement($cidades),
-                'complemento' => $faker->boolean(60) ? $faker->randomElement($complementos) : null,
+                'email' => $faker->unique()->safeEmail(),
+                'telefone' => $faker->numerify('(##) #####-####'),
+                'cpf' => $faker->numerify('###.###.###-##'),
+                'data_nascimento' => $faker->dateTimeBetween('-80 years', '-18 years')->format('Y-m-d'),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

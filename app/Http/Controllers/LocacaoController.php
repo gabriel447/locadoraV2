@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Movie;
 use App\Models\Locacao;
+use App\Models\Historico;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Cliente;
+use Illuminate\Support\Facades\Log;
 
 class LocacaoController extends Controller
 {
@@ -73,65 +75,53 @@ class LocacaoController extends Controller
 
     public function devolucoes()
     {
-        $locacoes = Locacao::where('devolvido', false)
-                      ->orderBy('id', 'asc')
-                      ->get();
-        
-        foreach ($locacoes as $locacao) {
-            $hoje = Carbon::now();
-            $dataDevolucao = Carbon::parse($locacao->data_devolucao);
-            
-            $locacao->atrasado = $hoje->gt($dataDevolucao);
-            
-            if ($locacao->atrasado) {
-                // Calcular dias de atraso
-                $diasAtraso = 0;
-                $dataAtual = $dataDevolucao->copy()->addDay();
-                
-                while ($dataAtual->lte($hoje)) {
-                    $diasAtraso++;
-                    $dataAtual->addDay();
-                }
-                
-                $valorMulta = $diasAtraso * 2.50; // Multa fixa de R$ 2,50 por dia
-                
-                $locacao->dias_atraso = $diasAtraso;
-                $locacao->valor_multa = $valorMulta;
-                $locacao->valor_total = $locacao->valor + $valorMulta;
-            } else {
-                $locacao->dias_atraso = 0;
-                $locacao->valor_multa = 0;
-                $locacao->valor_total = $locacao->valor;
-            }
-        }
-        
-        return view('devolucoes.index', compact('locacoes'));
+        $locacoes = Locacao::where('devolvido', false)->get();
+        $historico = Historico::orderBy('created_at', 'desc')->get();
+        return view('devolucoes.index', compact('locacoes', 'historico'));
     }
 
-    public function devolver($id)
+    public function confirmarDevolucao(Request $request)
     {
-        $locacao = Locacao::findOrFail($id);
-        $movie = Movie::where('codigo', $locacao->codigo_filme)->first();
-        $dataDevolucaoEfetiva = Carbon::now();
-        $dataDevolucaoPrevista = Carbon::parse($locacao->data_devolucao);
-        
-        // Se houver atraso
-        if ($dataDevolucaoEfetiva->gt($dataDevolucaoPrevista)) {
-            $diasAtraso = $dataDevolucaoPrevista->diffInDays($dataDevolucaoEfetiva);
-            $valorMulta = $diasAtraso * 2.50; // Multa fixa de R$ 2,50 por dia de atraso
+        try {
+            $locacao = Locacao::findOrFail($request->locacao_id);
             
-            $locacao->multa = true;
-            $locacao->valor_multa = $valorMulta;
-            $locacao->valor_total = $locacao->valor + $valorMulta;
+            // Atualizar o status do filme para disponível
+            $filme = Movie::where('codigo', $locacao->codigo_filme)->first();
+            if ($filme) {
+                $filme->disponivel = true;
+                $filme->save();
+            }
+    
+            // Criar registro no histórico com todos os campos necessários
+            Historico::create([
+                'nome_cliente' => $locacao->nome_cliente,
+                'nome_filme' => $locacao->nome_filme,
+                'data_locacao' => $locacao->data_locacao,
+                'data_devolucao' => now(),
+                'valor' => $locacao->valor,
+                'multa' => $request->multa ?? 0,
+                'desconto' => $request->desconto ?? 0,
+                'observacoes' => $request->observacoes ?? 'n/a'
+            ]);
+    
+            // Marcar locação como devolvida
+            $locacao->devolvido = true;
+            $locacao->save();
+    
+            return response()->json(['success' => true, 'message' => 'Devolução realizada com sucesso!']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Erro ao processar devolução: ' . $e->getMessage()], 500);
         }
-        
-        $locacao->devolvido = true;
-        $locacao->data_devolucao_efetiva = $dataDevolucaoEfetiva;
-        $locacao->save();
-        
-        $movie->disponivel = true;
-        $movie->save();
-        
-        return redirect()->route('devolucoes.index')->with('success', 'Filme devolvido com sucesso!');
+    }
+
+    public function historico()
+    {
+        try {
+            // Buscar todo o histórico, ordenado pelo mais recente
+            $historico = Historico::orderBy('created_at', 'desc')->get();
+            return response()->json($historico);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao carregar histórico'], 500);
+        }
     }
 }
