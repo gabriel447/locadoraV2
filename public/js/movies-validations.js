@@ -1,5 +1,5 @@
 function apenasLetras(texto) {
-    return texto.replace(/[^a-záàâãéèêíïóôõöúçñ ]/gi, '');
+    return texto.replace(/[^a-záàâãéèêíïóôõöúçñ0-9 ]/gi, '');
 }
 
 function apenasNumeros(texto, limite) {
