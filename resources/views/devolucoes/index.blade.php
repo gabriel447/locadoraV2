@@ -172,9 +172,10 @@ body {
                                 <th>Filme</th>
                                 <th>Data Locação</th>
                                 <th>Data Devolução</th>
-                                <th>Valor</th>
-                                <th>Multa</th>
+                                <th>Valor Total</th>
+                                <th>Valor Locação</th>
                                 <th>Desconto</th>
+                                <th>Multa</th>
                                 <th>Observações</th>
                             </tr>
                         </thead>
@@ -185,9 +186,10 @@ body {
                                     <td>{{ $registro->nome_filme }}</td>
                                     <td>{{ \Carbon\Carbon::parse($registro->data_locacao)->format('d/m/Y') }}</td>
                                     <td>{{ \Carbon\Carbon::parse($registro->data_devolucao)->format('d/m/Y') }}</td>
-                                    <td>R$ {{ number_format($registro->valor, 2, ',', '.') }}</td>
-                                    <td>R$ {{ number_format($registro->multa, 2, ',', '.') }}</td>
+                                    <td>R$ {{ number_format($registro->valor_total, 2, ',', '.') }}</td>
+                                    <td>R$ {{ number_format($registro->valor_locacao, 2, ',', '.') }}</td>
                                     <td>R$ {{ number_format($registro->desconto, 2, ',', '.') }}</td>
+                                    <td>R$ {{ number_format($registro->multa, 2, ',', '.') }}</td>
                                     <td>{{ $registro->observacoes ?? '-' }}</td>
                                 </tr>
                             @empty

@@ -121,7 +121,8 @@ class LocacaoController extends Controller
                 'nome_filme' => $locacao->nome_filme,
                 'data_locacao' => $locacao->data_locacao,
                 'data_devolucao' => $dataDevolucaoReal,
-                'valor' => $valorOriginal,
+                'valor_locacao' => $valorOriginal,
+                'valor_total' => $valorOriginal + $multa - $desconto,
                 'multa' => $multa,
                 'desconto' => $desconto,
                 'observacoes' => $request->observacoes ?? ''

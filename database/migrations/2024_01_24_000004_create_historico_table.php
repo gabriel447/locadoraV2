@@ -14,7 +14,8 @@ return new class extends Migration
             $table->string('nome_filme');
             $table->date('data_locacao');
             $table->date('data_devolucao');
-            $table->decimal('valor', 8, 2);
+            $table->decimal('valor_locacao', 8, 2);
+            $table->decimal('valor_total', 8, 2);
             $table->decimal('multa', 8, 2)->nullable();
             $table->decimal('desconto', 8, 2)->nullable();
             $table->text('observacoes')->nullable();
