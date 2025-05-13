@@ -35,7 +35,7 @@ class MoviesTableSeeder extends Seeder
             DB::table('movies')->insert([
                 'nome' => $filme['nome'],
                 'ano' => $filme['ano'],
-                'codigo' => $faker->unique()->numerify('MOV####'),
+                'codigo' => $faker->unique()->numerify('#####'),
                 'genero' => $filme['genero'],
                 'disponivel' => true,
                 'created_at' => now(),
