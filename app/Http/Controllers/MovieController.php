@@ -28,7 +28,7 @@ class MovieController extends Controller
             'genero' => 'required|string',
         ]);
         
-        $validated['disponivel'] = 1;
+        $validated['disponivel'] = true;
     
         try {
             Movie::create($validated);
@@ -74,7 +74,7 @@ class MovieController extends Controller
         ], $messages);
     
         try {
-            $validated['disponivel'] = $request->disponivel ? 1 : 0;
+            $validated['disponivel'] = $request->disponivel ? true : false;
             
             $movie->update($validated);
             
