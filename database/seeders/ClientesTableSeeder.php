@@ -80,6 +80,9 @@ class ClientesTableSeeder extends Seeder
                 'telefone' => $faker->numerify('(##) #####-####'),
                 'cpf' => $faker->numerify('###.###.###-##'),
                 'data_nascimento' => $faker->dateTimeBetween('-80 years', '-18 years')->format('Y-m-d'),
+                'idade' => $faker->numberBetween(18, 80),
+                'cidade' => $faker->randomElement($cidades),
+                'bairro' => $faker->randomElement($bairros),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

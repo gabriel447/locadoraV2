@@ -15,6 +15,9 @@ return new class extends Migration
             $table->string('telefone');
             $table->string('cpf')->unique();
             $table->date('data_nascimento');
+            $table->integer('idade')->nullable();
+            $table->string('cidade')->nullable();
+            $table->string('bairro')->nullable();
             $table->timestamps();
         });
     }
