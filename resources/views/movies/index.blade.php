@@ -52,7 +52,6 @@ body {
                                 <th>Ano</th>
                                 <th>Código</th>
                                 <th>Gênero</th>
-                                <th>Disponível</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
@@ -64,7 +63,6 @@ body {
                                 <td>{{ $movie->ano }}</td>
                                 <td>{{ $movie->codigo }}</td>
                                 <td>{{ $movie->genero }}</td>
-                                <td>{{ $movie->disponivel ? 'Sim' : 'Não' }}</td>
                                 <td>
                                     <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editMovieModal{{ $movie->id }}">
                                         Editar
@@ -128,11 +126,6 @@ body {
                             @endforeach
                         </select>
                     </div>
-                    <div class="mb-3 form-check">
-                        <input type="hidden" name="disponivel" value="0">
-                        <input type="checkbox" class="form-check-input" id="disponivel" name="disponivel" value="1" checked>
-                        <label class="form-check-label" for="disponivel">Disponível</label>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -175,11 +168,6 @@ body {
                             <option value="{{ $genero }}" {{ $movie->genero == $genero ? 'selected' : '' }}>{{ $genero }}</option>
                             @endforeach
                         </select>
-                    </div>
-                    <div class="mb-3 form-check">
-                        <input type="hidden" name="disponivel" value="0">
-                        <input type="checkbox" class="form-check-input" id="disponivel{{ $movie->id }}" name="disponivel" value="1" {{ $movie->disponivel ? 'checked' : '' }}>
-                        <label class="form-check-label" for="disponivel{{ $movie->id }}">Disponível</label>
                     </div>
                 </div>
                 <div class="modal-footer">

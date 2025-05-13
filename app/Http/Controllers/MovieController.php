@@ -26,10 +26,9 @@ class MovieController extends Controller
             'ano' => 'required|integer|min:1900|max:' . (date('Y')),
             'codigo' => 'required|integer|unique:movies,codigo',
             'genero' => 'required|string',
-            'disponivel' => 'nullable|boolean',
         ]);
         
-        $validated['disponivel'] = $request->input('disponivel', 0);
+        $validated['disponivel'] = 1;
     
         try {
             Movie::create($validated);
@@ -71,8 +70,7 @@ class MovieController extends Controller
             'nome' => 'required|string|max:255',
             'ano' => 'required|integer|min:1900|max:' . (date('Y') + 1),
             'codigo' => 'required|integer|unique:movies,codigo,' . $movie->id,
-            'genero' => 'required|string',
-            'disponivel' => 'boolean'
+            'genero' => 'required|string'
         ], $messages);
     
         try {
