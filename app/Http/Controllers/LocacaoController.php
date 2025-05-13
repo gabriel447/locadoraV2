@@ -91,16 +91,39 @@ class LocacaoController extends Controller
                 $filme->disponivel = true;
                 $filme->save();
             }
-    
+
+            $dataDevolucaoPrevista = Carbon::parse($locacao->data_devolucao);
+            $dataDevolucaoReal = Carbon::now();
+            $valorOriginal = $locacao->valor;
+            $multa = 0;
+            $desconto = 0;
+
+            // Calcula multa ou desconto baseado na data de devolução
+            if ($dataDevolucaoReal->gt($dataDevolucaoPrevista)) {
+                // Calcula multa para atraso (dias extras * 5.00 para dias úteis, 2.50 para fins de semana)
+                $dataAtual = $dataDevolucaoPrevista->copy();
+                while ($dataAtual->lt($dataDevolucaoReal)) {
+                    $multa += $dataAtual->isWeekend() ? 2.50 : 5.00;
+                    $dataAtual->addDay();
+                }
+            } elseif ($dataDevolucaoReal->lt($dataDevolucaoPrevista)) {
+                // Calcula desconto baseado nos dias que faltam até a data prevista
+                $dataAtual = $dataDevolucaoReal->copy()->addDay(); // Começa a contar a partir do dia seguinte
+                while ($dataAtual->lt($dataDevolucaoPrevista)) {
+                    $desconto += $dataAtual->isWeekend() ? 2.50 : 5.00;
+                    $dataAtual->addDay();
+                }
+            }
+
             // Criar registro no histórico com todos os campos necessários
             Historico::create([
                 'nome_cliente' => $locacao->nome_cliente,
                 'nome_filme' => $locacao->nome_filme,
                 'data_locacao' => $locacao->data_locacao,
-                'data_devolucao' => now(),
-                'valor' => $locacao->valor,
-                'multa' => $request->multa ?? 0,
-                'desconto' => $request->desconto ?? 0,
+                'data_devolucao' => $dataDevolucaoReal,
+                'valor' => $valorOriginal,
+                'multa' => $multa,
+                'desconto' => $desconto,
                 'observacoes' => $request->observacoes ?? ''
             ]);
     
@@ -108,7 +131,14 @@ class LocacaoController extends Controller
             $locacao->devolvido = true;
             $locacao->save();
     
-            return response()->json(['success' => true, 'message' => 'Devolução realizada com sucesso!']);
+            $mensagem = 'Devolução realizada com sucesso!';
+            if ($multa > 0) {
+                $mensagem .= ' Multa por atraso: R$ ' . number_format($multa, 2, ',', '.');
+            } elseif ($desconto > 0) {
+                $mensagem .= ' Desconto por devolução antecipada: R$ ' . number_format($desconto, 2, ',', '.');
+            }
+    
+            return response()->json(['success' => true, 'message' => $mensagem]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Erro ao processar devolução: ' . $e->getMessage()], 500);
         }

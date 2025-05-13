@@ -250,8 +250,24 @@ body {
             var hoje = new Date();
             
             if (hoje < dataDevolucao) {
-                var diasAntecipados = Math.floor((dataDevolucao - hoje) / (1000 * 60 * 60 * 24));
-                desconto = diasAntecipados * (valor * 0.1); // 10% de desconto por dia antecipado
+                var dataAtual = new Date(hoje);
+                dataAtual.setHours(0, 0, 0, 0); // Resetar o horário para meia-noite
+                var dataDevolucaoMeiaNoite = new Date(dataDevolucao);
+                dataDevolucaoMeiaNoite.setHours(0, 0, 0, 0);
+                
+                var diasUteis = 0;
+                var currentDate = new Date(dataAtual);
+                
+                while (currentDate < dataDevolucaoMeiaNoite) {
+                    var diaSemana = currentDate.getDay();
+                    if (diaSemana >= 1 && diaSemana <= 5) {
+                        diasUteis++;
+                    }
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+                
+                // Aplica o desconto de R$ 5,00 por dia útil
+                desconto = diasUteis * 5.00;
             }
 
             var valorTotal = valor + multa - desconto;
@@ -342,36 +358,34 @@ body {
                 }
             });
         });
-    });
-</script>
-<script>
-$(document).ready(function() {
-    $('#devolucaoForm').submit(function(e) {
-        e.preventDefault();
-        
-        var formData = $(this).serialize();
-        
-        $.ajax({
-            url: "{{ route('devolucoes.confirmar') }}",
-            type: "POST",
-            data: formData,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(response) {
-                if (response.success) {
-                    $('#devolverModal').modal('hide');
-                    location.reload();
-                } else {
-                    alert('Erro ao processar devolução: ' + response.message);
+
+        // Manipulação do formulário de devolução
+        $('#devolucaoForm').submit(function(e) {
+            e.preventDefault();
+            
+            var formData = $(this).serialize();
+            
+            $.ajax({
+                url: "{{ route('devolucoes.confirmar') }}",
+                type: "POST",
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $('#devolverModal').modal('hide');
+                        location.reload();
+                    } else {
+                        alert('Erro ao processar devolução: ' + response.message);
+                    }
+                },
+                error: function(xhr) {
+                    alert('Erro ao processar devolução. Por favor, tente novamente.');
                 }
-            },
-            error: function(xhr) {
-                alert('Erro ao processar devolução. Por favor, tente novamente.');
-            }
+            });
         });
     });
-});
 </script>
 @endpush
 @endsection
