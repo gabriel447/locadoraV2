@@ -16,8 +16,12 @@ return new class extends Migration
             $table->string('cpf')->unique();
             $table->date('data_nascimento');
             $table->integer('idade')->nullable();
+            $table->string('cep')->nullable();
+            $table->string('rua')->nullable();
+            $table->string('numero')->nullable();
             $table->string('cidade')->nullable();
             $table->string('bairro')->nullable();
+            $table->string('complemento')->nullable();
             $table->timestamps();
         });
     }

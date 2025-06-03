@@ -81,8 +81,12 @@ class ClientesTableSeeder extends Seeder
                 'cpf' => $faker->numerify('###.###.###-##'),
                 'data_nascimento' => $faker->dateTimeBetween('-80 years', '-18 years')->format('Y-m-d'),
                 'idade' => $faker->numberBetween(18, 80),
+                'cep' => $faker->numerify('#####-###'),
+                'rua' => $faker->randomElement($tiposLogradouro) . ' ' . $faker->randomElement($nomesRuas),
+                'numero' => $faker->buildingNumber(),
                 'cidade' => $faker->randomElement($cidades),
                 'bairro' => $faker->randomElement($bairros),
+                'complemento' => $faker->boolean(30) ? $faker->secondaryAddress() : null,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
