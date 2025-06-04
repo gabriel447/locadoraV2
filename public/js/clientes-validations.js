@@ -121,7 +121,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (cancelarBtn) {
             cancelarBtn.addEventListener('click', function() {
                 var form = modal.querySelector('form');
-                if (form) {
+                // Só limpa se for o modal de adicionar
+                if (form && modal.id === 'addClienteModal') {
                     limparFormulario(form);
                 }
             });
@@ -131,7 +132,8 @@ document.addEventListener('DOMContentLoaded', function() {
     modais.forEach(function(modal) {
         modal.addEventListener('hidden.bs.modal', function() {
             var form = modal.querySelector('form');
-            if (form) {
+            // Só limpa se for o modal de adicionar
+            if (form && modal.id === 'addClienteModal') {
                 limparFormulario(form);
             }
         });
