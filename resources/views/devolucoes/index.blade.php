@@ -194,7 +194,7 @@ body {
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="text-center">Nenhum registro encontrado no histórico.</td>
+                                    <td colspan="9" class="text-center">Nenhum registro encontrado no histórico.</td>
                                 </tr>
                             @endforelse
                         </tbody>
