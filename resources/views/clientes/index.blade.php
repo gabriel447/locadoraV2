@@ -116,10 +116,20 @@ body {
                             <input type="text" class="form-control" id="nome" name="nome" required>
                         </div>
                         <div class="col-md-3 mb-3">
+                            <label for="telefone" class="form-label">Telefone</label>
+                            <input type="text" class="form-control" id="telefone" name="telefone" placeholder="(00) 00000-0000" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
                             <label for="idade" class="form-label">Idade</label>
                             <input type="number" class="form-control" id="idade" name="idade" min="1" required>
                         </div>
-                        <div class="col-md-3 mb-3">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
                             <label for="cpf" class="form-label">CPF</label>
                             <input type="text" class="form-control" id="cpf" name="cpf" required>
                         </div>
@@ -175,6 +185,8 @@ body {
                 <div class="row">
                     <div class="col-md-6">
                         <p><strong>Nome:</strong> {{ $cliente->nome }}</p>
+                        <p><strong>Telefone:</strong> {{ $cliente->telefone }}</p>
+                        <p><strong>Email:</strong> {{ $cliente->email }}</p>
                         <p><strong>Idade:</strong> {{ $cliente->idade }}</p>
                         <p><strong>CPF:</strong> {{ $cliente->cpf }}</p>
                     </div>
@@ -216,10 +228,20 @@ body {
                             <input type="text" class="form-control" id="nome{{ $cliente->id }}" name="nome" value="{{ $cliente->nome }}" required>
                         </div>
                         <div class="col-md-3 mb-3">
+                            <label for="telefone{{ $cliente->id }}" class="form-label">Telefone</label>
+                            <input type="text" class="form-control" id="telefone{{ $cliente->id }}" name="telefone" value="{{ $cliente->telefone }}" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
                             <label for="idade{{ $cliente->id }}" class="form-label">Idade</label>
                             <input type="number" class="form-control" id="idade{{ $cliente->id }}" name="idade" min="1" value="{{ $cliente->idade }}" required>
                         </div>
-                        <div class="col-md-3 mb-3">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="email{{ $cliente->id }}" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email{{ $cliente->id }}" name="email" value="{{ $cliente->email }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
                             <label for="cpf{{ $cliente->id }}" class="form-label">CPF</label>
                             <input type="text" class="form-control" id="cpf{{ $cliente->id }}" name="cpf" value="{{ $cliente->cpf }}" required>
                         </div>

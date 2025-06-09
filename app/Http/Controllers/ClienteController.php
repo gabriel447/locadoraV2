@@ -22,6 +22,10 @@ class ClienteController extends Controller
     {
         $messages = [
             'nome.required' => 'O nome do cliente é obrigatório',
+            'email.required' => 'O email do cliente é obrigatório',
+            'email.email' => 'O email deve ser um endereço válido',
+            'email.unique' => 'Este email já está cadastrado',
+            'telefone.required' => 'O telefone do cliente é obrigatório',
             'idade.required' => 'A idade do cliente é obrigatória',
             'idade.integer' => 'A idade deve ser um número inteiro',
             'cpf.required' => 'O CPF do cliente é obrigatório',
@@ -35,6 +39,8 @@ class ClienteController extends Controller
 
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
+            'email' => 'required|email|unique:clientes,email',
+            'telefone' => 'required|string',
             'idade' => 'required|integer|min:1',
             'cpf' => 'required|string|unique:clientes,cpf',
             'cep' => 'required|string',

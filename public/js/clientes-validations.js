@@ -12,6 +12,21 @@ function formatCPF(cpf) {
     return cpf;
 }
 
+function formatTelefone(telefone) {
+    telefone = telefone.replace(/\D/g, '');
+    if (telefone.length > 11) telefone = telefone.substring(0, 11);
+    
+    if (telefone.length > 10) {
+        telefone = telefone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    } else if (telefone.length > 6) {
+        telefone = telefone.replace(/(\d{2})(\d{4})(\d+)/, '($1) $2-$3');
+    } else if (telefone.length > 2) {
+        telefone = telefone.replace(/(\d{2})(\d+)/, '($1) $2');
+    }
+    
+    return telefone;
+}
+
 function formatCEP(cep) {
     cep = cep.replace(/\D/g, '');
     if (cep.length > 8) cep = cep.substring(0, 8);
@@ -64,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var numeroInput = document.getElementById('numero');
     var cidadeInput = document.getElementById('cidade');
     var bairroInput = document.getElementById('bairro');
+    var telefoneInput = document.getElementById('telefone');
     
     if (cpfInput) cpfInput.addEventListener('input', function() { this.value = formatCPF(this.value); });
     if (cepInput) cepInput.addEventListener('input', function() { this.value = formatCEP(this.value); });
@@ -73,6 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (numeroInput) numeroInput.addEventListener('input', function() { this.value = apenasNumeros(this.value); });
     if (cidadeInput) cidadeInput.addEventListener('input', function() { this.value = apenasLetras(this.value); });
     if (bairroInput) bairroInput.addEventListener('input', function() { this.value = apenasLetras(this.value); });
+    if (telefoneInput) telefoneInput.addEventListener('input', function() { this.value = formatTelefone(this.value); });
     
     var cpfInputs = document.querySelectorAll('input[id^="cpf"]');
     var cepInputs = document.querySelectorAll('input[id^="cep"]');
@@ -82,6 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var numeroInputs = document.querySelectorAll('input[id^="numero"]');
     var cidadeInputs = document.querySelectorAll('input[id^="cidade"]');
     var bairroInputs = document.querySelectorAll('input[id^="bairro"]');
+    var telefoneInputs = document.querySelectorAll('input[id^="telefone"]');
     
     cpfInputs.forEach(function(input) {
         input.addEventListener('input', function() { this.value = formatCPF(this.value); });
@@ -113,6 +131,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     bairroInputs.forEach(function(input) {
         input.addEventListener('input', function() { this.value = apenasLetras(this.value); });
+    });
+    
+    telefoneInputs.forEach(function(input) {
+        input.addEventListener('input', function() { this.value = formatTelefone(this.value); });
     });
     
     var modais = document.querySelectorAll('.modal');
