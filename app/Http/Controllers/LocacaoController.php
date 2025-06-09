@@ -77,6 +77,13 @@ class LocacaoController extends Controller
     {
         $locacoes = Locacao::where('devolvido', false)->get();
         $historico = Historico::orderBy('created_at', 'desc')->get();
+        
+        // Buscar telefones dos clientes
+        foreach ($locacoes as $locacao) {
+            $cliente = Cliente::where('nome', $locacao->nome_cliente)->first();
+            $locacao->telefone_cliente = $cliente ? $cliente->telefone : null;
+        }
+        
         return view('devolucoes.index', compact('locacoes', 'historico'));
     }
 

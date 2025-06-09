@@ -48,7 +48,13 @@ body {
     line-height: 1.5;
     text-align: left;
 }
+/* Centralizar conteúdo de todas as colunas da tabela */
+#devolucoesTable th, #devolucoesTable td {
+    text-align: center;
+    vertical-align: middle;
+}
 </style>
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -79,6 +85,7 @@ body {
                                 <th>Data de Devolução</th>
                                 <th>Valor</th>
                                 <th>Status</th>
+                                <th>Contato</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
@@ -110,6 +117,25 @@ body {
                                         @endif
                                     </td>
                                     <td>
+                                        @if($locacao->telefone_cliente)
+                                            @php
+                                                // Remover caracteres não numéricos do telefone
+                                                $telefone = preg_replace('/[^0-9]/', '', $locacao->telefone_cliente);
+                                                // Garantir que o telefone tenha o formato correto para o WhatsApp
+                                                if(strlen($telefone) >= 10) {
+                                                    $whatsappUrl = "https://wa.me/55" . $telefone;
+                                                } else {
+                                                    $whatsappUrl = "#";
+                                                }
+                                            @endphp
+                                            <a href="{{ $whatsappUrl }}" target="_blank">
+                                                <img src="{{ asset('images/whatsapp.png') }}" alt="WhatsApp" width="30" height="30">
+                                            </a>
+                                        @else
+                                            <span class="text-muted">Indisponível</span>
+                                        @endif
+                                    </td>
+                                    <td>
                                         <button type="button" 
                                                 class="btn btn-primary btn-sm devolver-btn" 
                                                 data-bs-toggle="modal" 
@@ -127,7 +153,7 @@ body {
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="9" class="text-center">Não há filmes para devolução no momento.</td>
+                                    <td colspan="10" class="text-center">Não há filmes para devolução no momento.</td>
                                 </tr>
                             @endforelse
                         </tbody>
