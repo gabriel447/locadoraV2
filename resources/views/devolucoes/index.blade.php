@@ -16,6 +16,38 @@ body {
     margin: 0 auto;
     padding: 0 15px;
 }
+.truncate-text {
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: help;
+}
+.tooltip-text {
+    position: relative;
+    display: inline-block;
+}
+.tooltip-text:hover::after {
+    content: attr(data-tooltip);
+    position: fixed;
+    left: 50%;
+    top: 20%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background-color: rgba(51, 51, 51, 0.95);
+    color: #fff;
+    padding: 15px 20px;
+    border-radius: 8px;
+    white-space: normal;
+    max-width: 80%;
+    width: auto;
+    min-width: 300px;
+    word-wrap: break-word;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: left;
+}
 </style>
 <div class="container">
     <div class="row justify-content-center">
@@ -190,7 +222,19 @@ body {
                                     <td>R$ {{ number_format($registro->valor_locacao, 2, ',', '.') }}</td>
                                     <td>R$ {{ number_format($registro->desconto, 2, ',', '.') }}</td>
                                     <td>R$ {{ number_format($registro->multa, 2, ',', '.') }}</td>
-                                    <td>{{ $registro->observacoes ?? '-' }}</td>
+                                    <td>
+                                        @if($registro->observacoes)
+                                            @if(strlen($registro->observacoes) > 20)
+                                                <span class="tooltip-text truncate-text" data-tooltip="{{ $registro->observacoes }}">
+                                                    {{ $registro->observacoes }}
+                                                </span>
+                                            @else
+                                                {{ $registro->observacoes }}
+                                            @endif
+                                        @else
+                                            &nbsp;
+                                        @endif
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
