@@ -36,7 +36,7 @@ class ClienteController extends Controller
             'cidade.required' => 'A cidade é obrigatória',
             'bairro.required' => 'O bairro é obrigatório',
         ];
-
+    
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
             'email' => 'required|email|unique:clientes,email',
@@ -52,6 +52,10 @@ class ClienteController extends Controller
         ], $messages);
     
         try {
+            // Calcular a data de nascimento com base na idade
+            $dataNascimento = now()->subYears($validated['idade'])->format('Y-m-d');
+            $validated['data_nascimento'] = $dataNascimento;
+            
             Cliente::create($validated);
     
             return redirect()->route('clientes.index')
@@ -88,6 +92,7 @@ class ClienteController extends Controller
             'numero.required' => 'O número é obrigatório',
             'cidade.required' => 'A cidade é obrigatória',
             'bairro.required' => 'O bairro é obrigatório',
+            'telefone.required' => 'O telefone do cliente é obrigatório',
         ];
     
         $validated = $request->validate([
@@ -100,9 +105,15 @@ class ClienteController extends Controller
             'cidade' => 'required|string',
             'bairro' => 'required|string',
             'complemento' => 'nullable|string',
+            'telefone' => 'required|string',
+            'email' => 'required|email|unique:clientes,email,' . $cliente->id,
         ], $messages);
     
         try {
+            // Calcular a data de nascimento com base na idade
+            $dataNascimento = now()->subYears($validated['idade'])->format('Y-m-d');
+            $validated['data_nascimento'] = $dataNascimento;
+            
             $cliente->update($validated);
             
             return redirect()->route('clientes.index')
